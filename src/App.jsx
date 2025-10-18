@@ -1,6 +1,6 @@
 import React, { Children } from "react";
 import { lazy , Suspense } from 'react';
-import LottiHandeler from "/assets/Lottifiles/LottiHandeler";
+import LottiHandeler from "./assets/lottifiles/LottiHandeler.jsx";
 import toast, { Toaster } from 'react-hot-toast';
 
 
