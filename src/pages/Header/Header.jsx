@@ -19,7 +19,7 @@ function Header(){
 return(
   <div className=''>
   <div className="Header relative w-full z-0 overflow-hidden h-120">
-    <div className="absolute inset-0 z-5 bg-[url('../../../public/images/library.jpg')] bg-cover bg-no-repeat bg-center  ">
+    <div className="absolute inset-0 z-5 bg-[url('/images/library.jpg')] bg-cover bg-no-repeat bg-center  ">
     <div className="overlay absolute inset-0 bg-black/60 z-10"></div>
     <div className='relative z-20 flex flex-col items-center justify-center gap-5 mx-5 py-50'>
       <h1 className='max-md:text-4xl text-6xl font-bold text-blue-500 text-stroke'>Welcome to <span className='max-md:text-4xl text-6xl font-bold text-blue-500 text-stroke'>Bookstore</span> </h1>
