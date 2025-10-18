@@ -16,7 +16,7 @@ const Cart = lazy(()=> import('./pages/Cart/Cart'))
 const Checkout = lazy(()=> import('./pages/Cart/Checkout'))
 const Register = lazy(()=> import('./pages/auth/Register'))
 const Login = lazy(()=> import('./pages/auth/Login'))
-const GoogleLogin = lazy(()=> import('./pages/auth/GoogleLogin'))
+// const GoogleLogin = lazy(()=> import('./pages/auth/GoogleLogin'))
 const Profile = lazy(()=> import('./pages/Profile/Profile'))
 
 
@@ -49,8 +49,8 @@ const router = createBrowserRouter([
                 <Suspense fullback={<LottiHandeler status= 'page' />}> <Register/></Suspense> },
       {path: 'login' , element :
                 <Suspense fullback={<LottiHandeler status= 'page' />}> <Login/></Suspense> },
-      {path: 'googleLogin' , element :
-                <Suspense fullback={<LottiHandeler status= 'page' />}> <GoogleLogin/></Suspense> },
+      // {path: 'googleLogin' , element :
+      //           <Suspense fullback={<LottiHandeler status= 'page' />}> <GoogleLogin/></Suspense> },
       {path: 'profile' , element :
                 <Suspense fullback={<LottiHandeler status= 'page' />}> <Profile/></Suspense> }
     ],
