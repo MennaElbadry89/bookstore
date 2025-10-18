@@ -1,7 +1,6 @@
 // import React, { useContext, useState } from 'react';
 import './Header.css';
-import '../../../public/images/book-logo-PNG.png'
-import '../../../public/images/onlinestore.png'
+
 // import { BookContext } from '../../context/BookContext';
 
 function Header(){
