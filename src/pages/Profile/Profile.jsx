@@ -1,4 +1,4 @@
-import LottiHandeler from '../../assets/Lottifiles/LottiHandeler';
+import LottiHandeler from '../../assets/lottifiles/LottiHandeler.jsx';
 import { AuthContext } from '../../context/AuthContext'
 import  './Profile.css'
 import { useContext } from "react";
