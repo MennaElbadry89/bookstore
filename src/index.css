@@ -1,0 +1,41 @@
+@import "tailwindcss";
+/* @import "@heroui/styles"; */
+
+/* @plugin './hero.ts'; */
+/* Note: You may need to change the path to fit your project structure */
+@source '../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@custom-variant dark (&:is(.dark *));
+
+
+@layer base{
+body{
+    font-family: "Noto Serif", serif;
+    /* height: 10000px; */
+
+}
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root{
+
+}
+
+.text-stroke{
+    -webkit-text-stroke: 2px white;
+}
+
+.animate-scroll{
+    animation: scroll 4s linear infinite ;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+    
+}
