@@ -44,14 +44,14 @@ export default function BestSale(){
         // loop: true,
         mode: "free",
         slides: {
-            perView: 4,
-            spacing: 25,
+            perView: 5,
+            spacing: 10,
             // origin: "center",
         },
         breakpoints: {
-            "(max-width: 1024px)": { slides: { perView: 4 , spacing: 5}, },
-            "(max-width: 768px)": {  slides: { perView: 2 , spacing: 10},},
-            "(max-width: 480px)": {slides: { perView: 1 , spacing: 15},},
+            "(max-width: 1024px)": { slides: { perView: 6 , spacing: 10}, },
+            "(max-width: 768px)": {  slides: { perView: 3 , spacing: 15},},
+            "(max-width: 480px)": {slides: { perView: 1 , spacing: 20},},
     }
 });
   // autoplay guard and update when slides change
@@ -75,11 +75,11 @@ export default function BestSale(){
 
     return(
     <>
-        <div className="mt-2 w-full p-6 flex flex-col mb-2">
+        <div className=" w-full p-6 flex flex-col mb-">
             <h2 className="text-3xl font-bold mb-6 text-blue-600">BestSeller</h2>
 
 {bestBooks.length > 0 ? (
-           <div ref={sliderRef} className="keen-slider bg-blue-200 w-full p-5">
+           <div ref={sliderRef} className="keen-slider bg-blue-50 w-full p-10">
                 
                 { bestBooks.map( (book , index)=>{
                         const info = book.volumeInfo;
@@ -93,7 +93,7 @@ export default function BestSale(){
 
                         return(
                             <div key={index} className='relative keen-slider__slide bg-white shadow-lg rounded-2xl  p-5 hover:shadow-2xl h-96 transition-all duration-300'>
-                                <div className="bg-red-200 text-blue-700 p-3 absolute top-5 right-0">BestSeller</div>
+                                <div className="bg-green-200 font-extrabold text-blue-700 p-3 absolute top-5 right-0">BestSeller</div>
                                 <img src={image || "https://via.placeholder.com/150"} alt={title}
                                    className='w-full h-48 object-cover rounded-md mb-4' />
                                 <h2 className='text-lg font-semibold line-clamp-1'>{title}</h2>

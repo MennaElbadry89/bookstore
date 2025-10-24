@@ -7,11 +7,13 @@ import {AuthContext} from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 import Swal from 'sweetalert2'
+import { collection , addDoc , serverTimestamp } from 'firebase/firestore';
+import { db , auth} from '../../firebase/firebase';
 
 
 
 export default function Cart() {
-  const { cartItems = [], removeFromCart, clearCart, updateQuantity,  } = useCart();
+  const { cartItems = [], setCartItems , removeFromCart, clearCart, updateQuantity,  } = useCart();
     
     const {currentUser, loadingDisplayCurrentUser} = useContext(AuthContext)
     
@@ -19,14 +21,42 @@ export default function Cart() {
 
   const navigate = useNavigate()
   const[open ,setOpen ]=  useState(false)
-  const handleConfirm = ()=>{
-    swal({
-        title: "Confirm purchase",
-        text: `Total: ${totalPrice}$`,
-        });
 
+  const[isOpen ,setIsOpen ]=  useState(false)
+  const [removeItemId, setRemoveItemId] = useState(null)
+
+  const[isOpenc ,setIsOpenc ]=  useState(false)
+
+  const handleRemove = (id)=>{
+    removeFromCart(id)
+    setRemoveItemId(null)
+    setIsOpen(false)
+  }
+    const handleclearCart = ()=>{
     clearCart()
- }
+    setIsOpenc(false)
+  }
+
+  const handleConfirm = async()=>{
+    const user = auth.currentUser;
+    if(!user){
+      alert('login')
+      return;
+    }
+      const order = {
+        userId: user.uid,
+        items: cartItems,
+        total: cartItems.reduce((sum, item)=> sum + item.price * item.quantity ,0),
+        createdAt: serverTimestamp()
+      }
+     try{ await addDoc(collection(db , 'orders'), order);
+    clearCart()
+    navigate('/orders')
+
+    }catch(err){
+      console.log('error'); 
+    }
+}
 
   const totalPrice = cartItems.reduce((a, b) => {
       const  total = a + (+(b.price) || 0) * (+(b.quantity) || 1)
@@ -124,9 +154,19 @@ export default function Cart() {
 
               <button
                 className="btn bg-red-700 hover:bg-red-600 text-white p-2 rounded-lg"
-                onClick={() => removeFromCart(item.id)} > Remove
+                onClick={()=>setRemoveItemId(item.id)} > Remove
               </button>
-
+              {/* remove Modal */}
+                          { removeItemId === item.id && ( <div className='fixed inset-0 flex flex-col items-center justify-center gap-5 bg-black/40 z-100'>
+                            <div className="w-1/3 mx-auto mt-10 p-5 bg-white shadow-lg rounded">
+                              <h2 className="text-2xl text-center text-blue-700 my-5 font-bold ">Are you sure to remove item?!</h2>                               
+                            <div className='flex items-center justify-center mt-5 gap-1'>
+                                 <button onClick={()=>setRemoveItemId(null)} className='bg-blue-500 text-white px-4 py-2 rounded-lg cursor-pointer'>cancel</button>
+                                 <button onClick={() => handleRemove(item.id)} className='bg-red-800 text-white px-4 py-2 rounded-lg cursor-pointer' >confirm</button>
+                            </div>                                                
+                          </div>
+                         </div>  )}
+                         
             </div>
           </div>
         ))}
@@ -167,8 +207,18 @@ export default function Cart() {
               
             <button
               className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-500"
-              onClick={ clearCart}> Clear Cart
+              onClick={ ()=>setIsOpenc(true)}> Clear Cart
             </button>
+                          {/* clear Modal */}
+                          { isOpenc && ( <div className='fixed inset-0 flex flex-col items-center justify-center gap-5 bg-black/40 z-100'>
+                            <div className="w-1/3 mx-auto mt-10 p-5 bg-white shadow-lg rounded">
+                              <h2 className="text-2xl text-center text-blue-700 my-5 font-bold ">Are you sure to clear cart?!</h2>                               
+                            <div className='flex items-center justify-center mt-5 gap-1'>
+                                 <button onClick={()=>setIsOpenc(false)} className='bg-blue-500 text-white px-4 py-2 rounded-lg cursor-pointer'>cancel</button>
+                                 <button onClick={handleclearCart} className='bg-red-800 text-white px-4 py-2 rounded-lg cursor-pointer' >confirm</button>
+                            </div>                                                
+                          </div>
+                         </div>  )}
             </div>
           </div>
         </div>

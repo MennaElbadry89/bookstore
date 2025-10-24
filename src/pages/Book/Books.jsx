@@ -1,9 +1,7 @@
 import { useContext, useEffect , useState } from 'react';
 import './Books.css';
 import { BookContext } from '../../context/BookContext';
-import { ImBook } from "react-icons/im";
 import { GiOpenBook } from "react-icons/gi";
-
 import { IoCartOutline } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
@@ -76,11 +74,11 @@ export default function Books(){
      
 
     return(
-      <div className='max-w-6xl mx-auto p-6 flex flex-col'>
+      <div className='max-md:mx-10 mx-20 p-6 flex flex-col'>
         <h1 className='text-4xl font-bold mb-6 mx-auto text-blue-600 flex gap-2'>Books < GiOpenBook /> </h1>
        {
          books.length === 0 ? (< p className='text-center '> No result found</p> ) :
-       ( <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-col-4  gap-6 p-6">
+       ( <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-col-4  gap-6 p-10 ">
           {            
             books.slice(pagesVisited, pagesVisited + booksPerPage).map( (book , index)=>{
 
@@ -93,7 +91,7 @@ export default function Books(){
               const preview = info.previewLink ;
               const desc = info.description || "no description available."
               return(
-                <div key={index} className='bg-white shadow-lg rounded-2xl p-5 hover:shadow-2xl h-96 group relative transition-all duration-300'>
+                <div key={index} className='bg-white shadow-lg shadow-blue-200 rounded-2xl p-5 hover:shadow-2xl h-96 group relative transition-all duration-300'>
                    
                     <img src={image || "https://via.placeholder.com/150"} alt={title}
                        className='w-full h-48 object-cover rounded-md mb-4' />

@@ -1,7 +1,7 @@
 import React, { Children } from "react";
 import { lazy , Suspense } from 'react';
 import LottiHandeler from "./assets/lottifiles/LottiHandeler.jsx";
-import toast, { Toaster } from 'react-hot-toast';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 import { createBrowserRouter , RouterProvider} from  'react-router-dom'
@@ -13,10 +13,9 @@ const Books = lazy(()=> import('./pages/Book/Books'))
 const Shop = lazy(()=> import('./pages/Book/Books'))
 const Categories = lazy(()=> import('./pages/Categories/Categories'))
 const Cart = lazy(()=> import('./pages/Cart/Cart'))
-const Checkout = lazy(()=> import('./pages/Cart/Checkout'))
+const Orders = lazy(()=> import('./pages/Orders/Orders'))
 const Register = lazy(()=> import('./pages/auth/Register'))
 const Login = lazy(()=> import('./pages/auth/Login'))
-// const GoogleLogin = lazy(()=> import('./pages/auth/GoogleLogin'))
 const Profile = lazy(()=> import('./pages/Profile/Profile'))
 
 
@@ -43,8 +42,8 @@ const router = createBrowserRouter([
                 <Suspense fullback={<LottiHandeler status= 'page' />}> <Contact/></Suspense>},
       {path: 'cart' , element :
                 <Suspense fullback={<LottiHandeler status= 'cart' />}> <Cart/></Suspense> },
-      {path: 'checkout' , element :
-                <Suspense fullback={<LottiHandeler status= 'cart' />}> <Checkout/></Suspense> },
+      {path: 'orders' , element :
+                <Suspense fullback={<LottiHandeler status= 'cart' />}> <Orders/></Suspense> },
       {path: 'register' , element :
                 <Suspense fullback={<LottiHandeler status= 'page' />}> <Register/></Suspense> },
       {path: 'login' , element :

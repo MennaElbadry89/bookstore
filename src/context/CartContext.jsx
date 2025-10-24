@@ -1,4 +1,5 @@
 import { createContext  , useContext , useState , useEffect} from "react";
+import {toast} from "react-toastify";
 
 export const CartCountext = createContext()
 
@@ -23,7 +24,7 @@ export const CartProvider = ({children}) =>{
   const addToCart = (item) => {
     setCartItems((p) => {
       const exists = p.find((i) => i.id === item.id);
-      if (exists) {
+      if (exists) {      
         return p.map((i) => i.id === item.id ? { ...i, quantity: (parseInt(i.quantity)||1) + (parseInt(item.quantity)||1) } : i);
       }
       return [...p, item];
@@ -31,11 +32,11 @@ export const CartProvider = ({children}) =>{
   };
   
 
-         const handleAddToCart = (book) => {
+      const handleAddToCart = (book) => {
       
-             const info = book.volumeInfo || {};
-             const sale = book.saleInfo || {};
-             const item = {
+          const info = book.volumeInfo || {};
+          const sale = book.saleInfo || {};
+          const item = {
             id: book.id || book.etag || info.title,
             title: info.title || 'Untitled',
             author: info.authors?.[0] || 'Unknown',
@@ -43,7 +44,7 @@ export const CartProvider = ({children}) =>{
             quantity: 1,
             image: info.imageLinks?.thumbnail || '/images/placeholder.png',
             raw: book, // keep original for flexibility
-          };
+            };
           console.log('Books.handleAddToCart -> item:', item);
           try {
             addToCart(item);

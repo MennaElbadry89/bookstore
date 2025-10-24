@@ -33,7 +33,7 @@ function Profile(){
         }
         else{
 return(
-  <div className="Profile m-20">
+  <div className="Profile m-20 max-md:m-10">
     <h1 className='text-2xl my-10 text-center text-blue-600'>Your Profile data</h1>
     <div className='flex flex-col gap-5'>
       <p className='font-semibold'>Name: <span className='text-blue-600 '>{currentUser?.fullname}</span></p>

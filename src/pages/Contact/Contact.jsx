@@ -26,11 +26,11 @@ export default function Contact(){
   }
 
     return(
-        <section className="@container pt-5 bg-white">
+        <section className=" pt-5 bg-white">
         <h1 className="text-blue-500  py-5 mx-20 text-2xl">Keep in touch </h1>
 
-        <div className="Contact  mb-2 flex max-md:flex-col max-md:items-center max-md:justify-center gap-5 max-md:mx-20">
-            <form action="" className="flex flex-col gap-3 bg-white border border-blue-200 p-10 rounded-lg shadow-lg w-1/2 ml-20  max-md:w-full">
+        <div className="Contact  mb-2 flex max-md:flex-col max-md:items-center max-md:justify-center gap-5 mx-20 max-md:mx-10">
+            <form className="flex flex-col gap-3 bg-white border border-blue-200 p-10 rounded-lg shadow-lg w-1/2  max-md:w-full max-md:px-10">
                 <input type="text" placeholder="Name" className="border border-blue-200 rounded-lg px-3 py-2"/>
                 <input type="text" placeholder="E-mail" className="border border-blue-200 rounded-lg px-3 py-2"/>
                 <input type="text" placeholder="Subject" className="border border-blue-200 rounded-lg px-3 py-2"/>
@@ -38,7 +38,7 @@ export default function Contact(){
                 <button className="bg-blue-500 hover:bg-blue-300 text-white cursor-pointer px-3 py-2 border rounded-lg w-1/2">Submit</button>
             </form>
 
-            <div className="w-1/2 max-md:w-full max-md:ml-20 mx-20  flex flex-col justify-center items-center bg-white shadow-lg border border-blue-200 rounded-2xl">
+            <div className="w-1/2 max-md:w-full max-md:mx-auto  flex flex-col justify-center items-center bg-white shadow-lg border border-blue-200 rounded-2xl">
                  
                   <motion.div className='contac bg-white p-5 flex flex-col gap-5' 
                   variants={container}
@@ -46,17 +46,17 @@ export default function Contact(){
                   animate="show">
                      
                       <motion.div className='location p-5  rounded-lg border border-blue-200 flex gap-2' variants={item}>
-                          <MdMyLocation className="text-2xl text-blue-700"/>
+                          <MdMyLocation className="max-md:text-lg text-2xl text-blue-700"/>
                           <b className="pl-5 text-gray-500">Egypt - Sharkia - Zagazig</b>
                       </motion.div>
 
                       <motion.div className='message p-5  rounded-lg border border-blue-200 flex gap-2 ' variants={item}>
-                          <FaRegMessage className="text-2xl text-blue-700"/>
+                          <FaRegMessage className="max-md:text-lg text-2xl text-blue-700"/>
                           <b className="pl-5 text-gray-500">mennaelbadry21@gmail.com</b>
                       </motion.div>
 
                       <motion.div className='phone p-5 rounded-lg border border-blue-200 flex gap-2 ' variants={item}>
-                          <FaPhoneAlt className="text-2xl text-blue-700"/>
+                          <FaPhoneAlt className="max-md:text-lg text-2xl text-blue-700"/>
                           <b className="pl-5 text-gray-500">0120011001100</b>
                       </motion.div>
 

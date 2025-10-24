@@ -41,10 +41,10 @@ export default function NewBooks(){
       }
 
     return(
-        <div className="w-full mx-auto p-6 flex flex-col mb-10">
+        <div className="w-full mx-auto p-6 flex flex-col  ">
             <h2 className="text-3xl font-bold mb-6 text-blue-600">New Releases</h2>
 
-             <div>
+             <div className="hidden">
                 <Slider
                     label={`Just arrived`}
                     name="booksCount"
@@ -62,8 +62,8 @@ export default function NewBooks(){
 
              </div>
 
-            { books &&  (  <div className="overflow-x-auto mt-5" >
-          <div className=" flex flex-nowrap gap-6  w-max  p-2" style={{scrollBehavior: "auto"}} >
+            { books &&  (  <div className="overflow-x-auto mt-5 bg-blue-50" >
+          <div className=" flex flex-nowrap gap-6  w-max  p-10" style={{scrollBehavior: "auto"}} >
                 
                 {  (books.slice(0,count)).map( (book , index)=>{
                         const info = book.volumeInfo;
@@ -77,7 +77,7 @@ export default function NewBooks(){
 
                         return(
                             <div key={index} className='relative  bg-white shadow-lg rounded-2xl min-w-[200px] max-w-[220px] flex-shrink-0 p-5 hover:shadow-2xl h-96 transition-all duration-300'>
-                                <div className="bg-yellow-300 text-blue-700 p-3 absolute top-5 right-0">New</div>
+                                <div className="bg-yellow-300 font-extrabold text-blue-700 p-3 absolute top-5 right-0">New</div>
                                 <img src={image || "https://via.placeholder.com/150"} alt={title}
                                    className='w-full h-48 object-cover rounded-md mb-4' />
                                 <h2 className='text-lg font-semibold line-clamp-1'>{title}</h2>

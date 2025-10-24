@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import './Navbar.css';
-import book from '../../../public/images/Book-Logo.png'
+import book from '/images/Book-Logo.png'
 import { FaCartShopping } from "react-icons/fa6";
 import { TfiMenuAlt } from "react-icons/tfi";
 import { useNavigate } from 'react-router-dom';
@@ -73,9 +73,9 @@ if (selected) {
 
 return(
   <div className="Navbar z-100">
-    <div className="nav max-md:relative  flex items-center justify-between  bg-blue-50 px-5 py-2 shadow-2xl">
-       <div className='flex items-center justify-center gap-5'>
-      <a  className="logo w-12 h-12 rounded-full" href='/'>
+    <div className="nav max-md:relative  flex items-center justify-between  bg-blue-50 px-5 py-2 shadow-xl shadow-blue-100">
+       <div className='max-md:gap-2 flex items-center justify-center gap-5'>
+      <a  className="logo max-md:w-8 max-md:h-8 w-12 h-12 rounded-full" href='/'>
         <img src={book} alt="" />
       </a >
         <form onSubmit={handleSubmit} className='border border-blue-500 '>
@@ -85,19 +85,16 @@ return(
       </form>
       </div>
 {/* <div className={` ${open ? 'flex' : 'hidden'} max-md:flex-col max-md:gap-5 max-md:items-start max-md:pl-5 max-md:p-5 max-md:w-full max-md:absolute max-md:top-15 max-md:left-0   bg-blue-50   flex items-center justify-center gap-25 `} > */}
-     <div
-  className={`
-    ${open ? 'flex' : 'hidden'}  max-md:flex-col max-md:gap-5 max-md:items-start max-md:pl-5 max-md:p-5 max-md:w-full max-md:absolute max-md:top-15 max-md:left-0
-    bg-blue-50 z-100 md:flex md:static md:flex-row md:items-center md:justify-center md:gap-25
-  `}
->
+     <div className={`
+    ${open ? 'flex' : 'hidden'}  max-md:flex-col max-md:gap-5 max-md:items-start max-md:pl-5 max-md:p-5 max-md:w-full max-md:absolute max-md:top-15 max-md:left-0 bg-blue-50 z-100 
+    md:flex md:static md:flex-row md:items-center md:justify-center md:gap-25`}>
       <div className=''>
-        <ul className='max-md:flex-col flex items-center justify-center gap-5 '>
+        <ul className='max-md:flex-col md:gap-2 flex items-center justify-center gap-5 '>
           <li className='text-blue-700 hover:font-semibold'><a href="/home">Home</a></li>
           <li className='text-blue-700 hover:font-semibold'><a href="/about">About</a></li>
           <li className='text-blue-700 hover:font-semibold relative transition' 
               onMouseEnter={()=>setIsOpen(true)} onMouseLeave={()=>setIsOpen(false)}> Categories
-            { isOpen && (<ul className='absolute top-full bg-blue-50 shadoe-xl  w-40'>
+            { isOpen && (<ul className='absolute top-full bg-blue-50 shadoe-xl w-50'>
               {
               categories.map((cat , index)=>(<li key={index} onClick={()=>handleCategory(cat.query)}
               className='py-2 px-4 hover:border hover:border-blue-100 hover:shadow-xl cursor-pointer'> {cat.name} </li>
@@ -110,19 +107,17 @@ return(
       </div>
 
 
-
-
-      <div className="profile flex gap-10 text-blue-700">
+      <div className="profile flex gap-5 text-blue-700">
         { 
      loadingDisplayCurrentUser?
      <div className="">
       { loading ?
-     <div className='w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin'></div>
+     <div className='animate-spin'></div>
       : "" }
      </div>
      :
      !loadingDisplayCurrentUser && !currentUser ?
-           <div className="authHandeler flex gap-5 px-5 ">
+           <div className="authHandeler flex gap-2 ">
       <button className="text-blue-500 hover:text-blue-300 cursor-pointer"><a href="/register">Register</a></button>
       <button className="text-blue-500 hover:text-blue-300 cursor-pointer"><a href="/login">Login</a></button>
      </div>
@@ -130,17 +125,19 @@ return(
     <div className="absolute top-3 right-20 max-md:top-[-45px]">
      <button onClick={() => setExist(!exist)} className="mr-5">       
       <div className="flex items-center justify-center gap-2">
-         {countryData ? (
-           <img src={countryData?.flags?.png || countryData?.flags?.svg || countryData?.flag} alt={countryData?.name?.common || selected}              className="w-8 h-8 rounded-full"            />          ) : (            <span className="text-blue-300">welcome</span>          )}         
-            <span className="text-blue-500">{currentUser?.fullname || currentUser?.name || ''}</span>        </div>      </button>
-       {exist && (
-     <ul className=" p-2 ">
+        {countryData ? (
+        <img src={countryData?.flags?.png || countryData?.flags?.svg || countryData?.flag} alt={countryData?.name?.common || selected} className="w-8 h-8 rounded-full"/>):(<span className="text-blue-300">welcome</span> )} 
+        <span className="text-blue-500">{currentUser?.fullname || currentUser?.name || ''}</span>
+      </div>      
+    </button>
+      {exist && (
+     <ul className=" ">
     <li ><a href={'/profile'} className="bg-green-200 rounded-lg py-1 text-center w-[150px] block " >Profile</a></li>
     {/* <li ><a href={'/orders'} className="bg-blue-300 rounded-lg py-1 text-center w-[150px]  block my-1" >Orders</a></li> */}
     <li ><button className="bg-red-200 rounded-lg py-1 text-center w-[150px] block mt-1" onClick={()=>setOpenn(true)}>Logout</button>
               { openn && ( 
                     <div className="fixed inset-0 z-100 overflow-y-auto bg-black/30 flex items-center justify-center">
-                      <div className='bg-white p-10 rounded-xl flex flex-col gap-5 w-1/4'>
+                      <div className='bg-white p-10 rounded-xl flex flex-col gap-5 w-1/3'>
                       <h2 className='text-blue-950 text-center font-semibold'>Are u sure to exit ?!</h2>
                       <div className='flex gap-2 justify-center'>  
                       <button className="bg-red-700 hover:bg-red-500 px-3 py-2 rounded-xl text-white w-1/4 "
@@ -150,8 +147,7 @@ return(
                           </div>
                       </div>
                     </div>
-                  )
-                  }   
+                  )}   
     </li>
     </ul>
   )}
@@ -160,10 +156,7 @@ return(
 </div>
 
 
-
-
-
-      
+     
       <div className="cart text-2xl text-blue-500 flex gap-1">
           <a href="/cart"><FaCartShopping/></a> 
           <sup className='text-red-500'>{(totalItems)? totalItems : ""}</sup>
