@@ -60,7 +60,7 @@ export default function Books(){
 
 
  const [pageNumber, setPageNumber] = useState(0);
-  const booksPerPage = 9;
+  const booksPerPage = 6;
   const pagesVisited = pageNumber * booksPerPage;
   const pageCount = Math.ceil(books.length / booksPerPage);
 

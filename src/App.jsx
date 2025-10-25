@@ -34,10 +34,8 @@ const router = createBrowserRouter([
                 <Suspense fullback={<LottiHandeler status= 'page' />}> <About/></Suspense> },
       {path: 'books' , element :
                 <Suspense fullback={<LottiHandeler status= 'page' />}> <Books/></Suspense> },
-
       {path: 'shop' , element :
                 <Suspense fullback={<LottiHandeler status='page' />}> <Shop/> </Suspense> },     
-
       {path: 'contact' , element :
                 <Suspense fullback={<LottiHandeler status= 'page' />}> <Contact/></Suspense>},
       {path: 'cart' , element :
@@ -48,8 +46,6 @@ const router = createBrowserRouter([
                 <Suspense fullback={<LottiHandeler status= 'page' />}> <Register/></Suspense> },
       {path: 'login' , element :
                 <Suspense fullback={<LottiHandeler status= 'page' />}> <Login/></Suspense> },
-      // {path: 'googleLogin' , element :
-      //           <Suspense fullback={<LottiHandeler status= 'page' />}> <GoogleLogin/></Suspense> },
       {path: 'profile' , element :
                 <Suspense fullback={<LottiHandeler status= 'page' />}> <Profile/></Suspense> }
     ],

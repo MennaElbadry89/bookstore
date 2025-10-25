@@ -122,7 +122,7 @@ return(
       <button className="text-blue-500 hover:text-blue-300 cursor-pointer"><a href="/login">Login</a></button>
      </div>
       :
-    <div className="absolute top-3 right-20 max-md:top-[-45px]">
+    <div className="absolute top-3 max-md:top-[-45px]">
      <button onClick={() => setExist(!exist)} className="mr-5">       
       <div className="flex items-center justify-center gap-2">
         {countryData ? (
@@ -133,8 +133,8 @@ return(
       {exist && (
      <ul className=" ">
     <li ><a href={'/profile'} className="bg-green-200 rounded-lg py-1 text-center w-[150px] block " >Profile</a></li>
-    {/* <li ><a href={'/orders'} className="bg-blue-300 rounded-lg py-1 text-center w-[150px]  block my-1" >Orders</a></li> */}
-    <li ><button className="bg-red-200 rounded-lg py-1 text-center w-[150px] block mt-1" onClick={()=>setOpenn(true)}>Logout</button>
+    <li ><a href={'/orders'} className="bg-blue-200 rounded-lg py-1 text-center w-[150px]  block " >Orders</a></li>
+    <li ><button className="bg-red-200 rounded-lg py-1 text-center w-[150px] block cursor-pointer" onClick={()=>setOpenn(true)}>Logout</button>
               { openn && ( 
                     <div className="fixed inset-0 z-100 overflow-y-auto bg-black/30 flex items-center justify-center">
                       <div className='bg-white p-10 rounded-xl flex flex-col gap-5 w-1/3'>
@@ -157,9 +157,9 @@ return(
 
 
      
-      <div className="cart text-2xl text-blue-500 flex gap-1">
+      <div className="cart text-2xl text-blue-500 flex gap-1 ml-20">
           <a href="/cart"><FaCartShopping/></a> 
-          <sup className='text-red-500'>{(totalItems)? totalItems : ""}</sup>
+          <sup className='text-red-500'>{(currentUser) ? totalItems : ""}</sup>
       </div>
   </div>
 {/* </div> */}

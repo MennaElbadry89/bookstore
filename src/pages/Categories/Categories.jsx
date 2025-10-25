@@ -10,7 +10,7 @@ export default function Categories(){
   const { setQuery  , getBook} = useContext(BookContext);
   const navigate = useNavigate();
 
-  const categories = [ "Technology" ,"History" , "Ai"  , "Cooking" , "Health" , "Travel" ,  "Math" , "Poetry" , "Business" , "Comics"  , "Music" , "Sports" ];
+  const categories = [ "Technology"  , "Cooking" , "Health" , "Travel" ,  "Math" , "Poetry" , "Comics" , "Sports" ];
 
   const handleCategory = (cat)=>{
     getBook(cat)
@@ -40,7 +40,7 @@ export default function Categories(){
      { categories.map( (cat , index)=>(
       <motion.div 
       variants={Item}
-      className='p-5 border border-blue-500 w-full text-center shadow-xl rounded text-2xl text-blue-950 cursor-pointer hover:bg-blue-200 hover:text-white hover:scale-105 transition-all duration-300'
+      className='max-lg:p-2 max-lg:text-lg p-5 border border-blue-500 w-full text-center shadow-xl rounded text-2xl text-blue-950 cursor-pointer hover:bg-blue-200 hover:text-white hover:scale-105 transition-all duration-300'
       key={index} onClick={()=>handleCategory(cat)}>
         {cat}
       </motion.div>

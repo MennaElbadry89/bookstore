@@ -10,7 +10,7 @@ export const BookProvider = ({children}) =>{
    const [query , setQuery] = useState("");
 //    const API_KEY  = "AIzaSyCiq60mgjFY9FLJlYQ_KtZ-x7qALNs5s98" ;
 
- const getBook = async (query) =>{
+   const getBook = async (query) =>{
     try {
     setLoading(true);
      

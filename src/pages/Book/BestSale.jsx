@@ -44,12 +44,12 @@ export default function BestSale(){
         // loop: true,
         mode: "free",
         slides: {
-            perView: 5,
+            perView: 4,
             spacing: 10,
             // origin: "center",
         },
         breakpoints: {
-            "(max-width: 1024px)": { slides: { perView: 6 , spacing: 10}, },
+            "(max-width: 1024px)": { slides: { perView: 4 , spacing: 10}, },
             "(max-width: 768px)": {  slides: { perView: 3 , spacing: 15},},
             "(max-width: 480px)": {slides: { perView: 1 , spacing: 20},},
     }
