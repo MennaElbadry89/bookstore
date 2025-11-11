@@ -139,7 +139,7 @@ export default function Books(){
 {/* Modal */}
 
     { selectedBook && (<div className="modal fixed inset-0 bg-black/50 flex items-center justify-center z-[1000]">
-            <div className="bg-white rounded-2xl p-5 w-1/3  relative">
+            <div className="bg-white rounded-2xl p-5 w-1/2  relative max-md:w-full max-md:mx-10">
                 <button className="absolute top-2 right-3 text-gray-500 hover:text-black" 
                 onClick={handleClose}> <IoCloseSharp className='text-2xl text-white bg-red-700'/></button>
                 <div className='flex gap-5 mb-5'>

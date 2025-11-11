@@ -101,12 +101,12 @@ export default function NewBooks(){
             {/* Modal */}
 
             { selectedBook && (<div className="modal fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-2xl p-5 w-1/2 relative">
+            <div className="bg-white rounded-2xl p-5 w-1/2 relative max-md:w-full max-md:mx-10">
                 <button className="absolute top-2 right-3 text-gray-500 hover:text-black" 
                 onClick={handleClose}> <IoCloseSharp className='text-2xl text-white bg-red-700'/></button>
-                <div className='flex gap-5 mb-5'>
+                <div className='flex gap-5 mb-5 '>
                 <img src={selectedBook.volumeInfo.imageLinks?.thumbnail || "https://via.placeholder.com/150"} alt={selectedBook.volumeInfo.title}
-                 className="w-40 h-56 object-cover mask-auto text-center"/>
+                 className="w-40 h-56 object-cover mask-auto text-center max-md:w-20 max-md:h-28"/>
                  <div>
                 <h2 className="text-lg font-semibold mb-2">{selectedBook.volumeInfo.title}</h2>
                 <p className=" mb-3 text-gray-400 ">{selectedBook.volumeInfo.authors?.join(',') || 'unknown'}</p>

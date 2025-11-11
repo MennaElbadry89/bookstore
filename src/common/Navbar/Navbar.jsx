@@ -73,21 +73,21 @@ if (selected) {
 
 return(
   <div className="Navbar z-100">
-    <div className="nav max-md:relative  flex items-center justify-between  bg-blue-50 px-5 py-2 shadow-xl shadow-blue-100">
+    <div className="nav max-md:relative  flex items-center justify-between  bg-blue-50 px-10 py-2 shadow-xl shadow-blue-100">
        <div className='max-md:gap-2 flex items-center justify-center gap-5'>
       <a  className="logo max-md:w-8 max-md:h-8 w-12 h-12 rounded-full" href='/'>
         <img src={book} alt="" />
       </a >
         <form onSubmit={handleSubmit} className='border border-blue-500 '>
-        <input type="text" className='py-2 px-5 w-3/4' placeholder='search for books' value={searchTirm} 
+        <input type="text" className='p-2 w-3/4' placeholder='search for books' value={searchTirm} 
         onChange={(e)=>setSearchTirm(e.target.value)}/>
-        <button type='submit' className='bg-blue-500 hover:bg-blue-700 text-white py-2 px-2 w-1/4 cursor-pointer'>Search</button>
+        <button type='submit' className='bg-blue-500 hover:bg-blue-700 text-white p-2  w-1/4 cursor-pointer'>Go</button>
       </form>
       </div>
 {/* <div className={` ${open ? 'flex' : 'hidden'} max-md:flex-col max-md:gap-5 max-md:items-start max-md:pl-5 max-md:p-5 max-md:w-full max-md:absolute max-md:top-15 max-md:left-0   bg-blue-50   flex items-center justify-center gap-25 `} > */}
      <div className={`
-    ${open ? 'flex' : 'hidden'}  max-md:flex-col max-md:gap-5 max-md:items-start max-md:pl-5 max-md:p-5 max-md:w-full max-md:absolute max-md:top-15 max-md:left-0 bg-blue-50 z-100 
-    md:flex md:static md:flex-row md:items-center md:justify-center md:gap-25`}>
+    ${open ? 'flex' : 'hidden'}  max-md:flex-col max-md:gap-5 max-md:items-start max-md:pl-5  max-md:w-full max-md:absolute max-md:top-15 max-md:left-0 bg-blue-50 z-100 
+    md:flex md:static md:flex-row md:items-center md:justify-center md:gap-10`}>
       <div className=''>
         <ul className='max-md:flex-col md:gap-2 flex items-center justify-center gap-5 '>
           <li className='text-blue-700 hover:font-semibold'><a href="/home">Home</a></li>
@@ -122,7 +122,7 @@ return(
       <button className="text-blue-500 hover:text-blue-300 cursor-pointer"><a href="/login">Login</a></button>
      </div>
       :
-    <div className="absolute top-3 max-md:top-[-45px]">
+    <div className="absolute top-3 max-md:top-[-45px] max-sm:top:0 max-sm:right-0">
      <button onClick={() => setExist(!exist)} className="mr-5">       
       <div className="flex items-center justify-center gap-2">
         {countryData ? (
@@ -157,7 +157,7 @@ return(
 
 
      
-      <div className="cart text-2xl text-blue-500 flex gap-1 ml-20">
+      <div className="cart text-2xl text-blue-500 flex gap-1 ml-20 ">
           <a href="/cart"><FaCartShopping/></a> 
           <sup className='text-red-500'>{(currentUser) ? totalItems : ""}</sup>
       </div>

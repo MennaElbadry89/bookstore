@@ -33,7 +33,7 @@ export default function Categories(){
   }
 
   return(
-    <div className='py-10 mx-10'>
+    <div className='p-10 mx-10'>
 
     <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 z-200 " variants={container} initial="hidden" animate="show">
 

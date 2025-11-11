@@ -22,8 +22,8 @@ return(
     <div className="absolute inset-0 z-5 bg-[url('/images/library.jpg')] bg-cover bg-no-repeat bg-center  ">
     <div className="overlay absolute inset-0 bg-black/60 z-10"></div>
     <div className='relative z-20 flex flex-col items-center justify-center gap-5 mx-5 py-50'>
-      <h1 className='max-sm:text-2xl  max-md:text-4xl text-6xl font-bold text-blue-500 text-stroke'>Welcome to <span className='max-sm:text-2xl max-md:text-4xl text-6xl font-bold text-blue-500 text-stroke'>Bookstore</span> </h1>
-      <h3 className='max-sm:text-xl  max-md:text-2xl text-4xl font-bold text-blue-500 text-stroke'>Discover the latest books in AI, Technology, and more... </h3>
+      <h1 className='max-sm:text-2xl  max-md:text-4xl text-6xl font-bold text-blue-500 text-stroke'>Welcome to Bookstore</h1>
+      <h3 className='max-sm:text-xl  max-md:text-2xl text-4xl font-bold text-blue-500 text-stroke '>Discover the latest books in Technology, AI, and more... </h3>
       {/* <form onSubmit={handleSubmit} className='border border-blue-500 w-1/2'>
         <input type="text" className='py-2 px-5 w-3/4' placeholder='search for books' value={searchTirm} 
         onChange={(e)=>setSearchTirm(e.target.value)}/>
