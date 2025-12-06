@@ -107,57 +107,57 @@ return(
       </div>
 
 
-      <div className="profile flex gap-5 text-blue-700">
-        { 
-     loadingDisplayCurrentUser?
-     <div className="">
-      { loading ?
-     <div className='animate-spin'></div>
-      : "" }
-     </div>
-     :
-     !loadingDisplayCurrentUser && !currentUser ?
-           <div className="authHandeler flex gap-2 ">
-      <button className="text-blue-500 hover:text-blue-300 cursor-pointer"><a href="/register">Register</a></button>
-      <button className="text-blue-500 hover:text-blue-300 cursor-pointer"><a href="/login">Login</a></button>
-     </div>
-      :
-    <div className="absolute top-3 max-md:top-[-45px] max-sm:top:0 max-sm:right-0">
-     <button onClick={() => setExist(!exist)} className="mr-5">       
-      <div className="flex items-center justify-center gap-2">
-        {countryData ? (
-        <img src={countryData?.flags?.png || countryData?.flags?.svg || countryData?.flag} alt={countryData?.name?.common || selected} className="w-8 h-8 rounded-full"/>):(<span className="text-blue-300">welcome</span> )} 
-        <span className="text-blue-500">{currentUser?.fullname || currentUser?.name || ''}</span>
-      </div>      
-    </button>
-      {exist && (
-     <ul className=" ">
-    <li ><a href={'/profile'} className="bg-green-200 rounded-lg py-1 text-center w-[150px] block " >Profile</a></li>
-    <li ><a href={'/orders'} className="bg-blue-200 rounded-lg py-1 text-center w-[150px]  block " >Orders</a></li>
-    <li ><button className="bg-red-200 rounded-lg py-1 text-center w-[150px] block cursor-pointer" onClick={()=>setOpenn(true)}>Logout</button>
-              { openn && ( 
-                    <div className="fixed inset-0 z-100 overflow-y-auto bg-black/30 flex items-center justify-center">
-                      <div className='bg-white p-10 rounded-xl flex flex-col gap-5 w-1/3'>
-                      <h2 className='text-blue-950 text-center font-semibold'>Are u sure to exit ?!</h2>
-                      <div className='flex gap-2 justify-center'>  
-                      <button className="bg-red-700 hover:bg-red-500 px-3 py-2 rounded-xl text-white w-1/4 "
-                          onClick={logout}>Close</button>
-                            <button className="bg-green-700 hover:bg-green-500 px-3 py-2 rounded-xl text-white w-1/4 "
-                          onClick={()=>setOpenn(false)}>Cancel</button>
-                          </div>
-                      </div>
-                    </div>
-                  )}   
-    </li>
-    </ul>
-  )}
-  </div>
-}
+    <div className="profile flex gap-5 text-blue-700">
+    { loadingDisplayCurrentUser && loading ? (         
+        <div className="flex items-center">
+          
+            <div className='animate-spin w-5 h-5 border-2 rounded-full border-blue-500' />
+            
+          </div>
+        ) : !loadingDisplayCurrentUser && !currentUser ? (
+          <div className="authHandler flex gap-3 items-center">
+            <a href={"/register"} className="text-blue-500 hover:text-blue-300">Register</a>
+            <a href={"/login"} className="text-blue-500 hover:text-blue-300">Login</a>
+          </div>
+        ) : (
+          <div className="relative">
+            <button onClick={() => setExist(!exist)} className="mr-5 flex items-center gap-2">
+              {countryData ? (
+                <img src={countryData?.flags?.png || countryData?.flags?.svg || countryData?.flag} alt={countryData?.name?.common || selected} className="w-8 h-8 rounded-full"/>
+              ) : (
+                <span className="text-blue-500">welcome</span>
+              )}
+              <span className="text-blue-500">{currentUser?.fullname || currentUser?.name || ''}</span>
+            </button>
+
+            {exist && (
+              <ul className="absolute right-0 mt-2 bg-white shadow-md rounded p-2 w-[180px]">
+                <li><a href={"/profile"} className="block py-1 px-2 hover:bg-blue-50 rounded">Profile</a></li>
+                <li><a href={"/orders"} className="block py-1 px-2 hover:bg-blue-50 rounded">Orders</a></li>
+                <li>
+                  <button className="w-full text-left py-1 px-2 hover:bg-red-100 rounded" onClick={()=>setOpenn(true)}>Logout</button>
+                </li>
+              </ul>
+            )}
+
+            { openn && (
+              <div className="fixed inset-0 z-100 overflow-y-auto bg-black/30 flex items-center justify-center">
+                <div className='bg-white p-6 rounded-xl flex flex-col gap-4 w-80'>
+                  <h2 className='text-blue-950 text-center font-semibold'>Are you sure to exit ?</h2>
+                  <div className='flex gap-2 justify-center'>
+                    <button className="bg-red-700 hover:bg-red-500 px-3 py-2 rounded-xl text-white w-1/2" onClick={logout}>Logout</button>
+                    <button className="bg-green-700 hover:bg-green-500 px-3 py-2 rounded-xl text-white w-1/2" onClick={()=>setOpenn(false)}>Cancel</button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 </div>
 
 
      
-      <div className="cart text-2xl text-blue-500 flex gap-1 ml-20 ">
+      <div className="cart text-2xl text-blue-500 flex gap-1  ">
           <a href="/cart"><FaCartShopping/></a> 
           <sup className='text-red-500'>{(currentUser) ? totalItems : ""}</sup>
       </div>

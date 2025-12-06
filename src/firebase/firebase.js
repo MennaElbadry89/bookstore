@@ -8,6 +8,7 @@ const firebaseConfig = {
   authDomain: "bookstore-21.firebaseapp.com",
   projectId: "bookstore-21",
   storageBucket: "bookstore-21.firebasestorage.app",
+  // storageBucket: "bookstore-21.appspot.com",
   messagingSenderId: "966112172853",
   appId: "1:966112172853:web:e12c85beb385f2da0d0a7c",
   measurementId: "G-FQH3SXB6BQ"

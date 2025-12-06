@@ -40,8 +40,8 @@ const {cartItems} = useCart()
 
 
 return(
-  <div className="Orders p-10"> 
-  <h2 className='text-2xl font-bold mb-4'>My Orders</h2>
+  <div className="Orders w-full p-10"> 
+  <h2 className='mb-4 text-2xl font-bold'>My Orders</h2>
    
    {
     orders.length === 0 ? (<p>No orders yet</p>) : ( 

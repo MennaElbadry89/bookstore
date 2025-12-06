@@ -13,7 +13,7 @@ export default function Register(){
     const { regiserHandler , loading} = useContext(AuthContext);
     const [errfirebase , setErrfirebase] =useState(null);
     
-    const { register, handleSubmit, watch, formState: { errors , isValid , isDirty }} = useForm({
+    const { register, handleSubmit, formState: { errors , isValid , isDirty }} = useForm({
     resolver: zodResolver(RegisterSchema),
   })
 

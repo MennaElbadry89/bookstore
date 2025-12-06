@@ -31,20 +31,31 @@ function Profile(){
         else if( !loadingDisplayCurrentUser && ! currentUser){
             return <Navigate to={'/login'}/>
         }
-        else{
+        
 return(
-  <div className="Profile m-20 max-md:m-10">
-    <h1 className='text-2xl my-10 text-center font-semibold text-blue-600'>Your Profile data</h1>
-    <div className='flex flex-col gap-5'>
-      <p className='font-semibold'>Name: <span className='text-blue-600 '>{currentUser?.fullname}</span></p>
-      <p className='font-semibold'>E-mail: <span className='text-blue-600 '>{currentUser?.email}</span></p>
-      <p className='font-semibold'>Phone: <span className='text-blue-600 '>{currentUser?.phone}</span></p>
-      <p className='font-semibold  flex items-center gap-2'>Country : {countryData?.name} { countryData ? ( <img src={countryData?.flags?.png || countryData?.flags?.svg || countryData?.flag} alt={countryData?.name?.common || selected}
+    <div className="Profile p-10 max-w-2xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6">My Profile</h1>
+      <div className="bg-white shadow-lg rounded p-6 space-y-4">
+        <div>
+          <label className="font-semibold text-gray-700">Name:</label>
+          <p className="text-gray-600">{userData?.fullname || userData?.name || '-'}</p>
+        </div>
+        <div>
+          <label className="font-semibold text-gray-700">Email:</label>
+          <p className="text-gray-600">{userData?.email || '-'}</p>
+        </div>
+        <div>
+          <label className="font-semibold text-gray-700">Phone:</label>
+          <p className="text-gray-600">{userData?.phone || '-'}</p>
+        </div>
+        <div>
+          <label className='font-semibold text-gray-700'>Country:</label>
+          <p className='font-semibold  flex items-center gap-2'>{countryData?.name} { countryData ? ( <img src={countryData?.flags?.png || countryData?.flags?.svg || countryData?.flag} alt={countryData?.name?.common || selected}
         className="w-8 h-6 rounded "/>) : ("")} </p>
-
+        </div>
+      </div>
     </div>
-  </div>
 )
 }
-}
+
 export default Profile;

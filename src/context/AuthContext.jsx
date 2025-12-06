@@ -66,6 +66,23 @@ export const AuthContextProvider = ({ children }) => {
         }
     }
 
+
+//      const fetchUserData = async(uid)=>{
+//     try {
+//       const user = await getDoc( doc(db , 'users' , uid))
+//       if(user.exists()){
+//        console.log('User data fetched:', user.data());
+//         setCurrentUser(user.data())
+//      } else {
+//        console.log('User document does not exist');
+//        setCurrentUser(null);
+//      }
+//     } catch (err) {
+//      console.error('Error fetching user data:', err);
+//      setCurrentUser(null);
+//    }
+//   }
+
     const logout = async()=>{
         try {
             await signOut(auth)
@@ -88,6 +105,35 @@ export const AuthContextProvider = ({ children }) => {
     } , [])
 
 
+//     useEffect(() => {
+//   const unsubscribe = onAuthStateChanged(auth, async (user) => {
+//     console.log('Auth state changed - user:', user); // Debug log
+//     if (user) {
+//       try {
+//         const userDocRef = doc(db, 'users', user.uid);
+//         const userDoc = await getDoc(userDocRef);
+//         console.log('User doc data:', userDoc.data()); // Debug log
+        
+//         setCurrentUser({
+//           uid: user.uid,
+//           email: user.email,
+//           ...userDoc.data()
+//         });
+//       } catch (err) {
+//         console.error('Error fetching user doc:', err);
+//         setCurrentUser(null);
+//       }
+//     } else {
+//       console.log('No user logged in'); // Debug log
+//       setCurrentUser(null);
+//     }
+//     setLoadingDisplayCurrentUser(false);
+//   });
+
+//   return () => unsubscribe();
+// }, []);
+
+
     return (
     <AuthContext.Provider value={{
       regiserHandler,
@@ -103,3 +149,5 @@ export const AuthContextProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 }
+
+
