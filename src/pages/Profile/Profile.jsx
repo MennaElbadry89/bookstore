@@ -33,25 +33,25 @@ function Profile(){
         }
         
 return(
-    <div className="Profile p-10 max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">My Profile</h1>
-      <div className="bg-white shadow-lg rounded p-6 space-y-4">
-        <div>
-          <label className="font-semibold text-gray-700">Name:</label>
-          <p className="text-gray-600">{userData?.fullname || userData?.name || '-'}</p>
+    <div className="Profile mx-auto max-w-2xl p-10">
+      <h1 className="mb-6 text-3xl font-bold">My Profile</h1>
+      <div className="space-y-4 rounded bg-white p-6 shadow-lg">
+        <div className='flex'>
+          <label className="font-semibold text-blue-700">Name:</label>
+          <p className="text-black">{currentUser?.fullname || currentUser?.name || '-'}</p>
         </div>
-        <div>
-          <label className="font-semibold text-gray-700">Email:</label>
-          <p className="text-gray-600">{userData?.email || '-'}</p>
+        <div className='flex'>
+          <label className="font-semibold text-blue-700">Email:</label>
+          <p className="text-black">{currentUser?.email || '-'}</p>
         </div>
-        <div>
-          <label className="font-semibold text-gray-700">Phone:</label>
-          <p className="text-gray-600">{userData?.phone || '-'}</p>
+        <div className='flex'>
+          <label className="font-semibold text-blue-700">Phone:</label>
+          <p className="text-black">{currentUser?.phone || '-'}</p>
         </div>
-        <div>
-          <label className='font-semibold text-gray-700'>Country:</label>
-          <p className='font-semibold  flex items-center gap-2'>{countryData?.name} { countryData ? ( <img src={countryData?.flags?.png || countryData?.flags?.svg || countryData?.flag} alt={countryData?.name?.common || selected}
-        className="w-8 h-6 rounded "/>) : ("")} </p>
+        <div className='flex'>
+          <label className='font-semibold text-blue-700'>Country:</label>
+          <p className='flex items-center gap-2 font-semibold'>{countryData?.name} { countryData ? ( <img src={countryData?.flags?.png || countryData?.flags?.svg || countryData?.flag} alt={countryData?.name?.common || selected}
+        className="h-6 w-8 rounded"/>) : ("")} </p>
         </div>
       </div>
     </div>
