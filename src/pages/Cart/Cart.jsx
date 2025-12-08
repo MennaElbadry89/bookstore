@@ -112,57 +112,57 @@ export default function Cart() {
 
   if (!cartItems || cartItems.length === 0) {
     return (
-      <div className="Cart flex flex-col items-center justify-center my-10">
-        <h1 className="text-2xl text-blue-700 font-semibold mb-4">Your Cart is empty</h1>
-        <a href='/books' className="text-blue-500 ">Click ot add some books. </a >
+      <div className="Cart my-10 flex flex-col items-center justify-center">
+        <h1 className="mb-4 text-2xl font-semibold text-blue-700">Your Cart is empty</h1>
+        <a href='/books' className="text-blue-500">Click ot add some books. </a >
       </div>
     );
   }
 
 
   return (
-    <div className="Cart flex flex-col items-center my-10 w-full">
-      <h1 className="text-3xl font-bold mb-6">Your Cart</h1>
+    <div className="Cart my-10 flex w-full flex-col items-center">
+      <h1 className="mb-6 text-3xl font-bold">Your Cart</h1>
 
       <div className="w-3/4 space-y-4">
         {cartItems.map((item) => (
           <div key={item.id} 
-          className="flex items-center justify-between w-full shadow-lg rounded p-4 bg-white">
+          className="flex w-full items-center justify-between rounded bg-white p-4 shadow-lg">
             <div className="flex items-center gap-4">
-              <img src={item.image} alt={item.title} className="w-20 h-20 rounded-md object-cover"/>
+              <img src={item.image} alt={item.title} className="max-md:h-15 max-md:w-15 h-20 w-20 rounded-md object-cover"/>
               
               <div>
-                <p className="font-semibold">{item.title || 'Untitled'}</p>
-                <p className="text-sm text-gray-600">by {item.author || 'Unknown'}</p>
-                <p className="text-red-600 font-medium mt-1"> {item.price ? `${item.price} $` : 'Free'}</p>
+                <p className="font-semibold max-md:text-sm">{item.title || 'Untitled'}</p>
+                <p className="text-sm text-gray-600 max-md:text-sm">by {item.author || 'Unknown'}</p>
+                <p className="mt-1 font-medium text-red-600 max-md:text-sm"> {item.price ? `${item.price} $` : 'Free'}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                <button className="bg-blue-700 hover:bg-blue-500 text-white p-2 rounded-lg"
+                <button className="rounded-lg bg-blue-700 p-2 text-white hover:bg-blue-500 max-md:text-sm"
                   onClick={() => handleIncrease(item)}> + 
                 </button>
 
                 <p className="min-w-[36px] text-center">{item.quantity || 1}</p>
 
                 <button
-                  className="bg-blue-700 hover:bg-blue-500 text-white p-2 rounded-lg"
+                  className="rounded-lg bg-blue-700 p-2 text-white hover:bg-blue-500 max-md:text-sm"
                   onClick={() => handleDecrease(item)}> -  
                 </button>
               </div>
 
               <button
-                className="btn bg-red-700 hover:bg-red-600 text-white p-2 rounded-lg"
+                className="btn rounded-lg bg-red-700 p-2 text-white hover:bg-red-600 max-md:text-sm"
                 onClick={()=>setRemoveItemId(item.id)} > Remove
               </button>
               {/* remove Modal */}
-                          { removeItemId === item.id && ( <div className='fixed inset-0 flex flex-col items-center justify-center gap-5 bg-black/40 z-100'>
-                            <div className="w-1/3 mx-auto mt-10 p-5 bg-white shadow-lg rounded">
-                              <h2 className="text-2xl text-center text-blue-700 my-5 font-bold ">Are you sure to remove item?!</h2>                               
-                            <div className='flex items-center justify-center mt-5 gap-1'>
-                                 <button onClick={()=>setRemoveItemId(null)} className='bg-blue-500 text-white px-4 py-2 rounded-lg cursor-pointer'>cancel</button>
-                                 <button onClick={() => handleRemove(item.id)} className='bg-red-800 text-white px-4 py-2 rounded-lg cursor-pointer' >confirm</button>
+                          { removeItemId === item.id && ( <div className='z-100 fixed inset-0 flex flex-col items-center justify-center gap-5 bg-black/40'>
+                            <div className="mx-auto mt-10 w-1/3 rounded bg-white p-5 shadow-lg max-md:p-2">
+                              <h2 className="max-md:text-md my-5 text-center text-2xl font-bold text-blue-700 max-md:text-lg">Are you sure to remove item?!</h2>                               
+                            <div className='mt-5 flex items-center justify-center gap-1'>
+                                 <button onClick={()=>setRemoveItemId(null)} className='cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-white max-md:text-sm'>cancel</button>
+                                 <button onClick={() => handleRemove(item.id)} className='cursor-pointer rounded-lg bg-red-800 px-4 py-2 text-white max-md:text-sm' >confirm</button>
                             </div>                                                
                           </div>
                          </div>  )}
@@ -171,22 +171,22 @@ export default function Cart() {
           </div>
         ))}
 
-        <div className="flex items-center justify-between mt-4 p-4 bg-gray-50 rounded">
-          <h2 className="text-lg font-semibold">Total Price :</h2>
+        <div className="mt-4 flex items-center justify-between rounded bg-gray-50 p-4 max-md:p-2">
+          <h2 className="max-md:text-md text-lg font-semibold">Total Price :</h2>
           <div className="flex items-center gap-4">
-            <p className="text-xl font-bold">{totalPrice.toFixed(2)} $</p>
+            <p className="max-md:text-md text-xl font-bold">{totalPrice.toFixed(2)} $</p>
             <div className='flex gap-2'>
               <button
-              className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-500"
+              className="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-500"
               onClick={ ()=>setOpen(true)}> Checkout
             </button> 
 {/* // Modal ckeckout */}
 
-            { open && ( <div className='fixed inset-0 flex flex-col items-center justify-center gap-5 bg-black/40 z-100'>
-                            <div className="w-2/3 mx-auto mt-10 p-5 bg-white shadow-lg rounded">
-                              <h2 className="text-2xl text-center text-blue-700 my-5 font-bold ">confirm</h2>
+            { open && ( <div className='z-100 fixed inset-0 flex flex-col items-center justify-center gap-5 bg-black/40'>
+                            <div className="mx-auto mt-10 w-2/3 rounded bg-white p-5 shadow-lg">
+                              <h2 className="my-5 text-center text-2xl font-bold text-blue-700">confirm</h2>
                                  {
-                                 cartItems.length === 0 ? ( <p className='text-blue-700 '> Fill your cart to checkout </p>) : (
+                                 cartItems.length === 0 ? ( <p className='text-blue-700'> Fill your cart to checkout </p>) : (
                                  <>
                                  <ul>
                                 {cartItems.map((item)=>(
@@ -197,25 +197,25 @@ export default function Cart() {
                              <div className='flex items-center justify-between p-2 shadow-lg'>
                                   <span className="">Total: </span><span>{totalPrice} $</span>
                              </div>
-                            <div className='flex items-center justify-center mt-5 gap-1'>
-                                 <button onClick={()=>setOpen(false)} className='bg-blue-500 text-white px-4 py-2 rounded-lg cursor-pointer'>cancel</button>
-                                 <button onClick={handleConfirm} className='bg-red-800 text-white px-4 py-2 rounded-lg cursor-pointer' >confirm</button>
+                            <div className='mt-5 flex items-center justify-center gap-1'>
+                                 <button onClick={()=>setOpen(false)} className='cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-white'>cancel</button>
+                                 <button onClick={handleConfirm} className='cursor-pointer rounded-lg bg-red-800 px-4 py-2 text-white' >confirm</button>
                             </div>                    
                              </>    ) }
                           </div>
                          </div>  )}
               
             <button
-              className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-500"
+              className="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-500"
               onClick={ ()=>setIsOpenc(true)}> Clear Cart
             </button>
                           {/* clear Modal */}
-                          { isOpenc && ( <div className='fixed inset-0 flex flex-col items-center justify-center gap-5 bg-black/40 z-100'>
-                            <div className="w-1/3 mx-auto mt-10 p-5 bg-white shadow-lg rounded">
-                              <h2 className="text-2xl text-center text-blue-700 my-5 font-bold ">Are you sure to clear cart?!</h2>                               
-                            <div className='flex items-center justify-center mt-5 gap-1'>
-                                 <button onClick={()=>setIsOpenc(false)} className='bg-blue-500 text-white px-4 py-2 rounded-lg cursor-pointer'>cancel</button>
-                                 <button onClick={handleclearCart} className='bg-red-800 text-white px-4 py-2 rounded-lg cursor-pointer' >confirm</button>
+                          { isOpenc && ( <div className='z-100 fixed inset-0 flex flex-col items-center justify-center gap-5 bg-black/40'>
+                            <div className="mx-auto mt-10 w-1/3 rounded bg-white p-5 shadow-lg">
+                              <h2 className="my-5 text-center text-2xl font-bold text-blue-700">Are you sure to clear cart?!</h2>                               
+                            <div className='mt-5 flex items-center justify-center gap-1'>
+                                 <button onClick={()=>setIsOpenc(false)} className='cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-white'>cancel</button>
+                                 <button onClick={handleclearCart} className='cursor-pointer rounded-lg bg-red-800 px-4 py-2 text-white' >confirm</button>
                             </div>                                                
                           </div>
                          </div>  )}
