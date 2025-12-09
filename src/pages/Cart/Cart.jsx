@@ -201,7 +201,7 @@ export default function Cart() {
                              </div>
                              <div>
                               <form onSubmit={(e)=>e.preventDefault} className='flex flex-col'>
-                                <div className='mb-4 flex gap-2'>
+                                <div className='mb-4 flex gap-2 max-md:flex-col'>
                                   <div className='flex w-full items-center justify-between p-2 shadow-lg'>
                                     <label className='font-semibold text-blue-700'>E-mail :</label>                          
                                     <input type="email" defaultValue={currentUser?.email} />
