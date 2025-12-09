@@ -74,11 +74,11 @@ export default function Books(){
      
 
     return(
-      <div className='max-md:mx-10 mx-20 p-6 flex flex-col'>
-        <h1 className='text-4xl font-bold mb-6 mx-auto text-blue-600 flex gap-2'>Books < GiOpenBook /> </h1>
+      <div className='mx-20 flex flex-col p-6 max-md:mx-10'>
+        <h1 className='mx-auto mb-6 flex gap-2 text-4xl font-bold text-blue-600'>Books < GiOpenBook /> </h1>
        {
-         books.length === 0 ? (< p className='text-center '> No result found</p> ) :
-       ( <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-col-4  gap-6 p-10 ">
+         books.length === 0 ? (< p className='text-center'> No result found</p> ) :
+       ( <div className="lg:grid-col-4 grid grid-cols-1 gap-6 p-10 md:grid-cols-2 lg:grid-cols-3">
           {            
             books.slice(pagesVisited, pagesVisited + booksPerPage).map( (book , index)=>{
 
@@ -91,22 +91,23 @@ export default function Books(){
               const preview = info.previewLink ;
               const desc = info.description || "no description available."
               return(
-                <div key={index} className='bg-white shadow-lg shadow-blue-200 rounded-2xl p-5 hover:shadow-2xl h-96 group relative transition-all duration-300'>
+                <div key={index} className='group relative h-96 rounded-2xl bg-white p-5 shadow-lg shadow-blue-200 transition-all duration-300 hover:shadow-2xl'>
                    
                     <img src={image || "https://via.placeholder.com/150"} alt={title}
-                       className='w-full h-48 object-cover rounded-md mb-4' />
-                    <h2 className='text-lg font-semibold line-clamp-1'>{title}</h2>
-                    <p className='text-gray-600 text-sm line-clamp-1'>{authors}</p>
+                       className='mb-4 h-48 w-full rounded-md object-cover' />
+                    <h2 className='line-clamp-1 text-lg font-semibold'>{title}</h2>
+                    <p className='line-clamp-1 text-sm text-gray-600'>{authors}</p>
                   {
                     price ? ( <p className='text-xl text-red-600'> {price} $</p> ) : ( <p className='text-xl text-red-600'> Free </p> )
                   }
-                   <div className='flex gap-1 text-yellow-400 text-3xl'><FaStar/><FaStar/><FaStar/><FaStar/><FaStarHalfAlt/> </div>
-                    <div className=' flex gap-10 overflow-hidden text-2xl items-center justify-center text-center bg-blue-400 text-white p-3 rounded-lg absolute top-1/4  left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300'> 
-                       <div className='cursor-pointer '><FaRegHeart/></div>
+                   <div className='flex gap-1 text-3xl text-yellow-400'><FaStar/><FaStar/><FaStar/><FaStar/><FaStarHalfAlt/> </div>
+                    <div className='absolute left-1/2 top-1/4 flex -translate-x-1/2 items-center justify-center gap-10 overflow-hidden rounded-lg bg-blue-400 p-3 text-center text-2xl text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100'> 
+                       <div className='cursor-pointer'><FaRegHeart/></div>
                        {/* <div className='cursor-pointer'><FaEye/></div>  */}
-                       <div className='cursor-pointer '> <FaEye onClick={()=>handleopen(book)}/> </div> 
+                       <div className='cursor-pointer'> <FaEye onClick={()=>handleopen(book)}/> </div> 
                       <div onClick={()=>handleAddToCart(book)} className='cursor-pointer'><IoCartOutline/></div> 
                     </div>
+                  <button onClick={()=>handleAddToCart(book)} className='my-2 w-full rounded-xl bg-blue-400 p-2 text-white max-md:flex md:hidden'>Add-To-Cart</button>
                 </div>
               );
             } 
@@ -116,9 +117,9 @@ export default function Books(){
     )}
 
 {/* pagination */}
-<div className="row flex mx-auto mt-6 items-center gap-2">
+<div className="row mx-auto mt-6 flex items-center gap-2">
    <button
-      className="px-3 py-2 rounded-md border border-blue-300 text-blue-600 hover:text-white hover:bg-blue-800 disabled:opacity-50"
+      className="rounded-md border border-blue-300 px-3 py-2 text-blue-600 hover:bg-blue-800 hover:text-white disabled:opacity-50"
       onClick={() => setPageNumber(Math.max(0, pageNumber - 1))}
       disabled={pageNumber === 0}> Prev
     </button>
@@ -126,45 +127,45 @@ export default function Books(){
     {Array.from({ length: pageCount }).map((_, i) => (
       <button
         key={i}
-        className={`px-3 py-2 rounded-md border ${pageNumber === i ? 'bg-blue-800 text-white' : 'border-blue-300 text-blue-600'}`}     
+        className={`rounded-md border px-3 py-2 ${pageNumber === i ? 'bg-blue-800 text-white' : 'border-blue-300 text-blue-600'}`}     
         onClick={() => changePage({ selected: i })} >{ i+1 }</button>    
       ))}   
 
          <button      
-         className="px-3 py-2 rounded-md border border-blue-300 text-blue-600 hover:text-white hover:bg-blue-800 disabled:opacity-50 " 
+         className="rounded-md border border-blue-300 px-3 py-2 text-blue-600 hover:bg-blue-800 hover:text-white disabled:opacity-50" 
          onClick={() => setPageNumber(Math.min(pageCount - 1, pageNumber + 1))}      
          disabled={pageNumber === pageCount - 1 }>  Next  </button>
   </div>
 
 {/* Modal */}
 
-    { selectedBook && (<div className="modal fixed inset-0 bg-black/50 flex items-center justify-center z-[1000]">
-            <div className="bg-white rounded-2xl p-5 w-1/2  relative max-md:w-full max-md:mx-10">
-                <button className="absolute top-2 right-3 text-gray-500 hover:text-black" 
-                onClick={handleClose}> <IoCloseSharp className='text-2xl text-white bg-red-700'/></button>
-                <div className='flex gap-5 mb-5'>
+    { selectedBook && (<div className="modal fixed inset-0 z-[1000] flex items-center justify-center bg-black/50">
+            <div className="relative w-1/2 rounded-2xl bg-white p-5 max-md:mx-10 max-md:w-full">
+                <button className="absolute right-3 top-2 text-gray-500 hover:text-black" 
+                onClick={handleClose}> <IoCloseSharp className='bg-red-700 text-2xl text-white'/></button>
+                <div className='mb-5 flex gap-5'>
                 <img src={selectedBook.volumeInfo.imageLinks?.thumbnail || "https://via.placeholder.com/150"} alt={selectedBook.volumeInfo.title}
-                 className="w-40 h-56 object-cover mask-auto text-center"/>
+                 className="mask-auto h-56 w-40 object-cover text-center"/>
                  <div>
-                <h2 className="text-lg font-semibold mb-2">{selectedBook.volumeInfo.title}</h2>
-                <p className=" mb-3 text-gray-400 ">{selectedBook.volumeInfo.authors?.join(',') || 'unknown'}</p>
-               <p className=" mt-3 font-semibold text-red-500">{selectedBook.saleInfo?.listPrice?.amount ? 
+                <h2 className="mb-2 text-lg font-semibold">{selectedBook.volumeInfo.title}</h2>
+                <p className="mb-3 text-gray-400">{selectedBook.volumeInfo.authors?.join(',') || 'unknown'}</p>
+               <p className="mt-3 font-semibold text-red-500">{selectedBook.saleInfo?.listPrice?.amount ? 
                 `${selectedBook.saleInfo.listPrice.amount} $` : 'Free'}</p>
                 <button  onClick={() => {
                     const url = selectedBook.volumeInfo.previewLink;
                     if (url) window.open(url, '_blank', 'noopener,noreferrer');
                     // else alert('Preview not available');
-                  }} className='font-semibold cursor-pointer'>preview</button>
+                  }} className='cursor-pointer font-semibold'>preview</button>
                </div> 
                </div>
-                <p className="text-sm indent-10 mt-5 leading-5 max-h-48 overflow-y-auto">{selectedBook.volumeInfo.description || "no description available."}</p>
+                <p className="mt-5 max-h-48 overflow-y-auto indent-10 text-sm leading-5">{selectedBook.volumeInfo.description || "no description available."}</p>
 
 
-                {/* <img src={selectedBook.image} alt=""  className="w-40 h-56 object-cover text-center"/>
-                <h2 className="text-center text-2xl font-semibold mb-2">{selectedBook.title}</h2>
-                <p className="text-center mb-3 text-gray-400 ">{selectedBook.authors}</p>
-                <p className="text-sm leading-5 max-h-48 overflow-y-auto">{selectedBook.desc}</p>
-                <p className="text-center mt-3 font-semibold ">{selectedBook.price}</p> */}
+                {/* <img src={selectedBook.image} alt=""  className="h-56 w-40 object-cover text-center"/>
+                <h2 className="mb-2 text-center text-2xl font-semibold">{selectedBook.title}</h2>
+                <p className="mb-3 text-center text-gray-400">{selectedBook.authors}</p>
+                <p className="max-h-48 overflow-y-auto text-sm leading-5">{selectedBook.desc}</p>
+                <p className="mt-3 text-center font-semibold">{selectedBook.price}</p> */}
     
             </div>
           </div>)}

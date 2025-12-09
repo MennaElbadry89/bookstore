@@ -13,9 +13,11 @@ import { db , auth} from '../../firebase/firebase';
 
 
 export default function Cart() {
+  const [address, setAddress] = useState("");
+  
   const { cartItems = [], setCartItems , removeFromCart, clearCart, updateQuantity,  } = useCart();
     
-    const {currentUser, loadingDisplayCurrentUser} = useContext(AuthContext)
+  const {currentUser, loadingDisplayCurrentUser} = useContext(AuthContext)
     
   const { loading  } = useContext(BookContext);
 
@@ -138,8 +140,8 @@ export default function Cart() {
               </div>
             </div>
 
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
                 <button className="rounded-lg bg-blue-700 p-2 text-white hover:bg-blue-500 max-md:text-sm"
                   onClick={() => handleIncrease(item)}> + 
                 </button>
@@ -158,7 +160,7 @@ export default function Cart() {
               </button>
               {/* remove Modal */}
                           { removeItemId === item.id && ( <div className='z-100 fixed inset-0 flex flex-col items-center justify-center gap-5 bg-black/40'>
-                            <div className="mx-auto mt-10 w-1/3 rounded bg-white p-5 shadow-lg max-md:p-2">
+                            <div className="mx-auto mt-10 w-1/3 rounded bg-white p-5 shadow-lg max-md:w-2/3 max-md:p-2">
                               <h2 className="max-md:text-md my-5 text-center text-2xl font-bold text-blue-700 max-md:text-lg">Are you sure to remove item?!</h2>                               
                             <div className='mt-5 flex items-center justify-center gap-1'>
                                  <button onClick={()=>setRemoveItemId(null)} className='cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-white max-md:text-sm'>cancel</button>
@@ -183,8 +185,8 @@ export default function Cart() {
 {/* // Modal ckeckout */}
 
             { open && ( <div className='z-100 fixed inset-0 flex flex-col items-center justify-center gap-5 bg-black/40'>
-                            <div className="mx-auto mt-10 w-2/3 rounded bg-white p-5 shadow-lg">
-                              <h2 className="my-5 text-center text-2xl font-bold text-blue-700">confirm</h2>
+                            <div className="mx-auto mt-10 w-4/5 rounded bg-white p-5 shadow-lg">
+                              <h2 className="max-md:text-md my-5 text-center text-2xl font-bold text-blue-700">confirm</h2>
                                  {
                                  cartItems.length === 0 ? ( <p className='text-blue-700'> Fill your cart to checkout </p>) : (
                                  <>
@@ -197,9 +199,31 @@ export default function Cart() {
                              <div className='flex items-center justify-between p-2 shadow-lg'>
                                   <span className="">Total: </span><span>{totalPrice} $</span>
                              </div>
+                             <div>
+                              <form onSubmit={(e)=>e.preventDefault} className='flex flex-col'>
+                                <div className='mb-4 flex gap-2'>
+                                  <div className='flex w-full items-center justify-between p-2 shadow-lg'>
+                                    <label className='font-semibold text-blue-700'>E-mail :</label>                          
+                                    <input type="email" defaultValue={currentUser?.email} />
+                                  </div>
+                                  <div className='flex w-full items-center justify-between p-2 shadow-lg'>
+                                    <label className='font-semibold text-blue-700'>Phone:</label>
+                                    <input type="text" defaultValue={currentUser?.phone} />
+                                  </div>
+                                  </div>
+                                  <label className='font-semibold text-blue-700'>Shipping Address :</label>
+                                  <textarea  value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
+                                    className='w-full rounded border border-gray-300 p-2' placeholder='Enter your shipping address here...'></textarea>
+
+                              </form>
+                              </div>
                             <div className='mt-5 flex items-center justify-center gap-1'>
-                                 <button onClick={()=>setOpen(false)} className='cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-white'>cancel</button>
-                                 <button onClick={handleConfirm} className='cursor-pointer rounded-lg bg-red-800 px-4 py-2 text-white' >confirm</button>
+                                 <button onClick={()=>setOpen(false)} className='max-md:text-md cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-white'>cancel</button>
+                                 {/* <button onClick={ handleConfirm } className='max-md:text-md cursor-pointer rounded-lg bg-red-800 px-4 py-2 text-white' >confirm</button> */}
+                                <button  disabled={!address.trim()}
+                                   onClick={handleConfirm}  className={`max-md:text-md rounded-lg px-4 py-2 text-white
+                                   ${address.trim() ? "cursor-pointer bg-red-800" : "cursor-not-allowed bg-red-300"}`} >confirm  </button>            
                             </div>                    
                              </>    ) }
                           </div>
@@ -211,11 +235,11 @@ export default function Cart() {
             </button>
                           {/* clear Modal */}
                           { isOpenc && ( <div className='z-100 fixed inset-0 flex flex-col items-center justify-center gap-5 bg-black/40'>
-                            <div className="mx-auto mt-10 w-1/3 rounded bg-white p-5 shadow-lg">
-                              <h2 className="my-5 text-center text-2xl font-bold text-blue-700">Are you sure to clear cart?!</h2>                               
+                            <div className="mx-auto mt-10 w-1/3 rounded bg-white p-5 shadow-lg max-md:w-2/3">
+                              <h2 className="my-5 text-center text-2xl font-bold text-blue-700 max-md:text-xl">Are you sure to clear cart?!</h2>                               
                             <div className='mt-5 flex items-center justify-center gap-1'>
-                                 <button onClick={()=>setIsOpenc(false)} className='cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-white'>cancel</button>
-                                 <button onClick={handleclearCart} className='cursor-pointer rounded-lg bg-red-800 px-4 py-2 text-white' >confirm</button>
+                                 <button onClick={()=>setIsOpenc(false)} className='max-md:text-md cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-white'>cancel</button>
+                                 <button onClick={handleclearCart} className='max-md:text-md cursor-pointer rounded-lg bg-red-800 px-4 py-2 text-white' >confirm</button>
                             </div>                                                
                           </div>
                          </div>  )}

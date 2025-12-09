@@ -29,9 +29,45 @@ export default function BestSale(){
             setSelectedBook(null)
         }
         
-    
+function filterBooks(books, options = {}) {
+  return books.filter(book => {
+    const volume = book.volumeInfo || {};
+    const sale = book.saleInfo || {};
+
+    if (options.title) {
+      if (!volume.title?.toLowerCase().includes(options.title.toLowerCase()))
+        return false;
+    }
+
+    if (options.author) {
+      if (!volume.authors?.some(a => a.toLowerCase().includes(options.author.toLowerCase())))
+        return false;
+    }
+
+    if (options.minPages) {
+      if (!(volume.pageCount > options.minPages)) return false;
+    }
+
+    if (options.afterYear) {
+      const year = Number(volume.publishedDate?.substring(0, 4));
+      if (!(year > options.afterYear)) return false;
+    }
+
+    if (options.language) {
+      if (volume.language !== options.language) return false;
+    }
+
+    if (options.minPrice) {
+      if (!(sale.listPrice?.amount > options.minPrice)) return false;
+    }
+
+    return true;
+  });
+}
+
         useEffect(()=>{
-                setBestBooks(books.filter(book => book.saleInfo?.listPrice?.amount > 20))
+        const filterdBooks = filterBooks(books, { language: "en" });
+                setBestBooks(filterdBooks)
                 console.log("Best sale books:" , bestBooks)   
         } , [books ])
          
@@ -75,11 +111,11 @@ export default function BestSale(){
 
     return(
     <>
-        <div className=" w-full p-6 flex flex-col mb-">
-            <h2 className="text-3xl font-bold mb-6 text-blue-600">BestSeller</h2>
+        <div className="mb- flex w-full flex-col p-6">
+            <h2 className="mb-6 text-3xl font-bold text-blue-600">BestSeller</h2>
 
 {bestBooks.length > 0 ? (
-           <div ref={sliderRef} className="keen-slider bg-blue-50 w-full p-10">
+           <div ref={sliderRef} className="keen-slider w-full bg-blue-50 p-10">
                 
                 { bestBooks.map( (book , index)=>{
                         const info = book.volumeInfo;
@@ -92,18 +128,18 @@ export default function BestSale(){
                         const price = sale?.listPrice?.amount || "Free";
 
                         return(
-                            <div key={index} className='relative keen-slider__slide bg-white shadow-lg rounded-2xl  p-5 hover:shadow-2xl h-96 transition-all duration-300'>
-                                <div className="bg-green-200 font-extrabold text-blue-700 p-3 absolute top-5 right-0">BestSeller</div>
+                            <div key={index} className='keen-slider__slide relative h-96 rounded-2xl bg-white p-5 shadow-lg transition-all duration-300 hover:shadow-2xl'>
+                                <div className="absolute right-0 top-5 bg-green-200 p-3 font-extrabold text-blue-700">BestSeller</div>
                                 <img src={image || "https://via.placeholder.com/150"} alt={title}
-                                   className='w-full h-48 object-cover rounded-md mb-4' />
-                                <h2 className='text-lg font-semibold line-clamp-1'>{title}</h2>
-                                <p className='text-sm text-gray-600 line-clamp-1'>by {authors}</p>
-                                <p className='text-sm text-red-600 line-clamp-1'>{price}</p>
-                                <div className='flex gap-1 text-yellow-400 text-3xl'><FaStar/><FaStar/><FaStar/><FaStar/><FaStarHalfAlt/> </div>
-                                <div className=' flex gap-10 overflow-hidden text-2xl items-center justify-center text-center bg-blue-300 text-white p-3 rounded-lg '> 
-                                 <div className='cursor-pointer '><FaRegHeart/></div>
-                                <div className='cursor-pointer '> <FaEye onClick={()=>handleopen(book)}/> </div> 
-                                 <div className='cursor-pointer '><IoCartOutline onClick={()=>handleAddToCart(book)}/></div>
+                                   className='mb-4 h-48 w-full rounded-md object-cover' />
+                                <h2 className='line-clamp-1 text-lg font-semibold'>{title}</h2>
+                                <p className='line-clamp-1 text-sm text-gray-600'>by {authors}</p>
+                                <p className='line-clamp-1 text-sm text-red-600'>{price}</p>
+                                <div className='flex gap-1 text-3xl text-yellow-400'><FaStar/><FaStar/><FaStar/><FaStar/><FaStarHalfAlt/> </div>
+                                <div className='flex items-center justify-center gap-10 overflow-hidden rounded-lg bg-blue-300 p-3 text-center text-2xl text-white max-md:gap-5'> 
+                                 <div className='cursor-pointer'><FaRegHeart/></div>
+                                <div className='cursor-pointer'> <FaEye onClick={()=>handleopen(book)}/> </div> 
+                                 <div className='cursor-pointer'><IoCartOutline onClick={()=>handleAddToCart(book)}/></div>
                                 </div>
                             </div>
                         )
@@ -117,25 +153,25 @@ export default function BestSale(){
 
 {/* Modal */}
 
-            { selectedBook && (<div className="modal fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-2xl p-5 w-1/2 relative max-md:w-full max-md:mx-10">
-                <button className="absolute top-2 right-3 text-gray-500 hover:text-black" 
-                onClick={handleClose}> <IoCloseSharp className='text-2xl text-white bg-red-700'/></button>
-                <div className='flex gap-5 mb-5'>
+            { selectedBook && (<div className="modal fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+            <div className="relative w-1/2 rounded-2xl bg-white p-5 max-md:mx-10 max-md:w-full">
+                <button className="absolute right-3 top-2 text-gray-500 hover:text-black" 
+                onClick={handleClose}> <IoCloseSharp className='bg-red-700 text-2xl text-white'/></button>
+                <div className='mb-5 flex gap-5'>
                 <img src={selectedBook.volumeInfo.imageLinks?.thumbnail || "https://via.placeholder.com/150"} alt={selectedBook.volumeInfo.title}
-                 className="w-40 h-56 object-cover mask-auto text-center"/>
+                 className="mask-auto h-56 w-40 object-cover text-center"/>
                  <div>
-                <h2 className="text-lg font-semibold mb-2">{selectedBook.volumeInfo.title}</h2>
-                <p className=" mb-3 text-gray-400 ">{selectedBook.volumeInfo.authors?.join(',') || 'unknown'}</p>
-               <p className=" mt-3 font-semibold text-red-500">{selectedBook.saleInfo?.listPrice?.amount ? 
+                <h2 className="mb-2 text-lg font-semibold">{selectedBook.volumeInfo.title}</h2>
+                <p className="mb-3 text-gray-400">{selectedBook.volumeInfo.authors?.join(',') || 'unknown'}</p>
+               <p className="mt-3 font-semibold text-red-500">{selectedBook.saleInfo?.listPrice?.amount ? 
                 `${selectedBook.saleInfo.listPrice.amount} $` : 'Free'}</p>
                 <button  onClick={() => {
                     const url = selectedBook.volumeInfo.previewLink;
                     if (url) window.open(url, '_blank', 'noopener,noreferrer');
-                  }} className='font-semibold cursor-pointer'>preview</button>
+                  }} className='cursor-pointer font-semibold'>preview</button>
                </div> 
                </div>
-                <p className="text-sm indent-10 mt-5 leading-5 max-h-48 overflow-y-auto">{selectedBook.volumeInfo.description || "no description available."}</p>
+                <p className="mt-5 max-h-48 overflow-y-auto indent-10 text-sm leading-5">{selectedBook.volumeInfo.description || "no description available."}</p>
             </div>
           </div>)}
 </>
