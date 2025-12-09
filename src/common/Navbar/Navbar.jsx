@@ -72,8 +72,8 @@ if (selected) {
 }
 
 return(
-  <div className="Navbar z-100">
-    <div className="nav flex items-center justify-between bg-blue-50 px-10 py-2 shadow-xl shadow-blue-100 max-md:relative">
+  <div className="Navbar z-50">
+    <div className="nav relative flex items-center justify-between bg-blue-50 px-10 py-2 shadow-xl shadow-blue-100 max-md:relative">
        <div className='flex items-center justify-center gap-5 max-md:gap-2'>
       <a  className="logo h-12 w-12 rounded-full max-md:h-8 max-md:w-8" href='/'>
         <img src={book} alt="" />
@@ -85,9 +85,8 @@ return(
       </form>
       </div>
 {/* <div className={` ${open ? 'flex' : 'hidden'}max-md:top-15 gap-25 flex items-center justify-center bg-blue-50 max-md:absolute max-md:left-0 max-md:w-full max-md:flex-col max-md:items-start max-md:gap-5 max-md:p-5 max-md:pl-5`} > */}
-     <div className={`
-    ${open ? 'flex' : 'hidden'}max-md:top-15 z-100 bg-blue-50 max-md:absolute max-md:left-0 max-md:w-full max-md:flex-col max-md:items-start max-md:gap-5 max-md:pl-5 md:static md:flex md:flex-row md:items-center md:justify-center md:gap-10`}>
-      <div className=''>
+     <div className={`// ${open ? 'flex' : 'hidden'} max-md:top-15 z-50 bg-blue-50 max-md:absolute max-md:left-0 max-md:w-full max-md:flex-col max-md:items-start max-md:gap-5 max-md:p-5 md:static md:flex md:flex-row md:items-center md:justify-center md:gap-10`}>
+ <div className=''>
         <ul className='flex items-center justify-center gap-5 max-md:flex-col md:gap-2'>
           <li className='text-blue-700 hover:font-semibold'><a href="/home">Home</a></li>
           <li className='text-blue-700 hover:font-semibold'><a href="/about">About</a></li>
@@ -100,23 +99,20 @@ return(
               ))}
                  </ul>)} 
           </li>
-          <li className='text-blue-700 hover:font-semibold'><a href="/contact">Contact</a></li>
-          <li className='text-blue-700 hover:font-semibold'><a href="/books">Books</a></li>
+          <li className='text-blue-700 hover:font-semibold'><a onClick={()=>setOpen(false)} href="/contact">Contact</a></li>
+          <li className='text-blue-700 hover:font-semibold'><a onClick={()=>setOpen(false)} href="/books">Books</a></li>
         </ul>
       </div>
 
-
-    <div className="profile flex gap-5 text-blue-700">
+    <div className="profile flex gap-5 text-blue-700 max-md:my-2 max-md:flex max-md:items-center max-md:justify-center">
     { loadingDisplayCurrentUser && loading ? (         
-        <div className="flex items-center">
-          
-            <div className='h-5 w-5 animate-spin rounded-full border-2 border-blue-500' />
-            
+          <div className="flex items-center">        
+            <div className='h-5 w-5 animate-spin rounded-full border-2 border-blue-500' />            
           </div>
         ) : !loadingDisplayCurrentUser && !currentUser ? (
           <div className="authHandler flex items-center gap-3">
-            <a href={"/register"} className="text-blue-500 hover:text-blue-300">Register</a>
-            <a href={"/login"} className="text-blue-500 hover:text-blue-300">Login</a>
+            <a href={"/register"} onClick={()=>setOpen(false)} className="text-blue-500 hover:text-blue-300">Register</a>
+            <a href={"/login"} onClick={()=>setOpen(false)} className="text-blue-500 hover:text-blue-300">Login</a>
           </div>
         ) : (
           <div className="relative">
@@ -131,8 +127,8 @@ return(
 
             {exist && (
               <ul className="absolute -right-20 mt-2 w-[180px] rounded bg-white p-2 shadow-md">
-                <li><a href={"/profile"} className="block rounded px-2 py-1 hover:bg-blue-50">Profile</a></li>
-                <li><a href={"/orders"} className="block rounded px-2 py-1 hover:bg-blue-50">Orders</a></li>
+                <li><a href={"/profile"} onClick={()=>setOpen(false)} className="block rounded px-2 py-1 hover:bg-blue-50">Profile</a></li>
+                <li><a href={"/orders"} onClick={()=>setOpen(false)} className="block rounded px-2 py-1 hover:bg-blue-50">Orders</a></li>
                 <li>
                   <button className="w-full rounded px-2 py-1 text-left hover:bg-red-100" onClick={()=>setOpenn(true)}>Logout</button>
                 </li>
@@ -153,10 +149,8 @@ return(
           </div>
         )}
 </div>
-
-
      
-      <div className="cart flex gap-1 text-2xl text-blue-500">
+      <div className="cart flex gap-1 text-2xl text-blue-500 max-md:items-center max-md:justify-center">
           <a href="/cart"><FaCartShopping/></a> 
           <sup className='text-red-500'>{(currentUser) ? totalItems : ""}</sup>
       </div>
