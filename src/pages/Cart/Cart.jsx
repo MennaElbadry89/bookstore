@@ -134,8 +134,8 @@ export default function Cart() {
               <img src={item.image} alt={item.title} className="max-md:h-15 max-md:w-15 h-20 w-20 rounded-md object-cover"/>
               
               <div>
-                <p className="font-semibold max-md:text-sm">{item.title || 'Untitled'}</p>
-                <p className="text-sm text-gray-600 max-md:text-sm">by {item.author || 'Unknown'}</p>
+                <p className="block font-semibold max-md:hidden">{item.title || 'Untitled'}</p>
+                <p className="text-sm text-gray-600">by {item.author || 'Unknown'}</p>
                 <p className="mt-1 font-medium text-red-600 max-md:text-sm"> {item.price ? `${item.price} $` : 'Free'}</p>
               </div>
             </div>
@@ -174,12 +174,12 @@ export default function Cart() {
         ))}
 
         <div className="mt-4 flex items-center justify-between rounded bg-gray-50 p-4 max-md:p-2">
-          <h2 className="max-md:text-md text-lg font-semibold">Total Price :</h2>
+          <h2 className="max-md:text-md text-md font-semibold">Total Price :</h2>
           <div className="flex items-center gap-4">
-            <p className="max-md:text-md text-xl font-bold">{totalPrice.toFixed(2)} $</p>
+            <p className="max-md:text-md text-md font-bold">{totalPrice.toFixed(2)} $</p>
             <div className='flex gap-2'>
               <button
-              className="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-500"
+              className="rounded bg-red-600 p-2 text-white hover:bg-red-500 max-md:text-sm"
               onClick={ ()=>setOpen(true)}> Checkout
             </button> 
 {/* // Modal ckeckout */}
@@ -230,7 +230,7 @@ export default function Cart() {
                          </div>  )}
               
             <button
-              className="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-500"
+              className="rounded bg-red-600 p-2 text-white hover:bg-red-500 max-md:text-sm"
               onClick={ ()=>setIsOpenc(true)}> Clear Cart
             </button>
                           {/* clear Modal */}
