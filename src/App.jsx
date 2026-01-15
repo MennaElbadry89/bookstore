@@ -12,7 +12,7 @@ const About = lazy(()=> import('./pages/About/About'))
 const Contact = lazy(()=> import('./pages/Contact/Contact'))
 const Books = lazy(()=> import('./pages/Book/Books'))
 const Shop = lazy(()=> import('./pages/Book/Books'))
-const Categories = lazy(()=> import('./pages/Categories/Categories'))
+const Messages = lazy(()=> import('./pages/Messages/Messages'))
 const Cart = lazy(()=> import('./pages/Cart/Cart'))
 const Wishlist = lazy(()=> import('./pages/Wishlist/Wishlist'))
 const Orders = lazy(()=> import('./pages/Orders/Orders'))
@@ -40,6 +40,8 @@ const router = createBrowserRouter([
                 <Suspense fullback={<LottiHandeler status='page' />}> <Shop/> </Suspense> },     
       {path: 'contact' , element :
                 <Suspense fullback={<LottiHandeler status= 'page' />}> <Contact/></Suspense>},
+      {path: 'messages' , element :
+                <Suspense fullback={<LottiHandeler status= 'page' />}> <Messages/></Suspense>},
       {path: 'cart' , element :
                 <Suspense fullback={<LottiHandeler status= 'cart' />}> <Cart/></Suspense> },
        {path: 'wishlist' , element :
