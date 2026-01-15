@@ -168,10 +168,11 @@ return(
 
             {exist && (
               <ul className="absolute -right-20 mt-2 w-[180px] rounded bg-blue-50 p-2 shadow-md">
-                <li><a href={"/profile"} onClick={()=>setOpen(false)} className="block rounded px-2 py-1 hover:bg-blue-50">Profile</a></li>
-                <li><a href={"/orders"} onClick={()=>setOpen(false)} className="block rounded px-2 py-1 hover:bg-blue-50">Orders</a></li>
+                <li><a href={"/profile"} onClick={()=>setOpen(false)} className="block rounded px-2 py-1 hover:bg-green-100">Profile</a></li>
+                <li><a href={"/orders"} onClick={()=>setOpen(false)} className="block rounded px-2 py-1 hover:bg-blue-100">Orders</a></li>
+                <li><a href={"/messages"} onClick={()=>setOpen(false)} className="block rounded px-2 py-1 hover:bg-yellow-100">Messages</a></li>
                 <li>
-                  <button className="w-full rounded px-2 py-1 text-left hover:bg-red-100" onClick={()=>setOpenn(true)}>Logout</button>
+                  <button className="w-full cursor-pointer rounded px-2 py-1 text-left hover:bg-red-100" onClick={()=>setOpenn(true)}>Logout</button>
                 </li>
               </ul>
             )}
