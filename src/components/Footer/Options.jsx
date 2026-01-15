@@ -1,9 +1,12 @@
 import { useContext , useState } from "react";
 import { CountryContext } from '../../context/CountryContext'
+import {AuthContext} from "../../context/AuthContext";
 
 export default function Options(){
     
     const {country , selected , setSelected} = useContext(CountryContext);
+    const { currentUser } = useContext(AuthContext);
+    console.log("currentuser:", currentUser);
 
     const[search , setSearch] = useState("")
     const[showList , setShowList] = useState(false) 
@@ -13,34 +16,35 @@ export default function Options(){
 
     const handleSelect = (country) =>{
         setSelected(country)
-        setSearch(country.name)
+        setSearch("")
         setShowList(false)
     }
 
  return (
     <section className="@container mx-auto px-4">
-        <label htmlFor="country" className="block max-md:text-lg text-center text-2xl text-blue-700 "> <b>Select your country</b></label>
+        <label htmlFor="country" className="block text-center text-2xl text-blue-700 max-md:text-lg">
+             <b>Select your country</b>
+        </label>
         <div className="relative mx-auto mt-4 w-full">
             <input type="text" placeholder="select ur country" name="country"
-                className="border border-blue-700 rounded-lg p-2 w-full " value={search}
+                className="w-full rounded-lg border border-blue-700 p-2" value={search}
                 onChange={(e)=>{ setSearch(e.target.value); setShowList(true) }} />
 
-        {
-            showList && filtered.length > 0 && (
+            { showList && filtered.length > 0 && (
                 <ul>
                     {filtered.length > 0 ? ( filtered.map((country)=>(<li key={country.name} onClick={()=> handleSelect(country)}
-                     className="border rounded-lg p-2 w-full hover:bg-gray-200 cursor-pointer flex items-center gap-2">
-                        <img src={country.flag} alt={country.name} className="w-10 h-8"/>
+                     className="flex w-full cursor-pointer items-center gap-2 rounded-lg border p-2 hover:bg-gray-200">
+                        <img src={country.flag} alt={country.name} className="h-8 w-10"/>
                         <span className="font-semibold">{country.name}</span> </li> ))) 
                         : (<li className="text-blue-500" ></li>)}
                 </ul>
-            )
-        }
-        {selected && (<div className="flex gap-2 items-center mt-2 text-blue-500">
-                        <img src={selected.flag} alt={selected.name} className="w-6 h-6"/>
+            )}
+            { currentUser ?
+                selected && (<div className="mt-2 flex items-center gap-2 text-blue-500">
+                        <img src={selected.flag} alt={selected.name} className="h-6 w-6"/>
                         <span className="font-normal">{selected.name}</span>
-                    </div>)}
-    </div>
+                    </div>) : ""  }
+        </div>
     </section> 
  )
  

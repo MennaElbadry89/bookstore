@@ -10,56 +10,81 @@ import { FaStarHalfAlt } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import { useCart } from '../../context/CartContext';
 import  LottiHandeler from '../../assets/lottifiles/LottiHandeler';
+import { motion } from "framer-motion";
+import Swal from 'sweetalert2';
+import {AuthContext} from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import {useWishlist} from '../../context/WishlistContext';
+
 
 
 export default function Books(){
 
    const { handleAddToCart } = useCart();
+   const { handleAddToWishlist } = useWishlist()
+   const { currentUser } = useContext(AuthContext);
+   const navigate = useNavigate()
+   
 
-   //    const handleAddToCart = (book) => {
-  
-  //        const info = book.volumeInfo || {};
-  //        const sale = book.saleInfo || {};
-  //        const item = {
-  //       id: book.id || book.etag || info.title,
-  //       title: info.title || 'Untitled',
-  //       author: info.authors?.[0] || 'Unknown',
-  //       price: sale.listPrice?.amount || 0,
-  //       quantity: 1,
-  //       image: info.imageLinks?.thumbnail || '/images/placeholder.png',
-  //       raw: book, // keep original for flexibility
-  //     };
-  //     console.log('Books.handleAddToCart -> item:', item);
-  //     try {
-  //       addToCart(item);
-  //      console.log('addToCart called');
-  //     } catch (err) {
-  //       console.error('addToCart failed:', err);
-  //     }
-  //   };
-
+    const handleAdd = (book) => {
+     if (!currentUser) {
+       Swal.fire({
+         icon: 'warning',
+         title: 'Please log in',
+         text: 'You need to log in before adding items to your cart.',
+         showCancelButton: true,
+         confirmButtonText: 'Login',
+         cancelButtonText: 'Cancel',
+       }).then((result) => {
+         if (result.isConfirmed) {
+           navigate('/login'); 
+         }
+       });
+       return; 
+     }
+     console.log('Books.handleAddToCart -> item:', book);
+   
+     try {
+       handleAddToCart(book);
+       console.log('addToCart called');
+       Swal.fire({
+         icon: 'success',
+         title: 'Added to cart',
+         text: `"${book.volumeInfo.title}" has been added to your cart.`,
+         timer: 1500,
+         showConfirmButton: false,
+       });
+     } catch (err) {
+       console.error('addToCart failed:', err);
+       Swal.fire({
+         icon: 'error',
+         title: 'Error',
+         text: 'Failed to add book to cart.',
+       });
+     }
+   };
+   
 
     const {books , loading , getBook } = useContext(BookContext);
-
     const [selectedBook , setSelectedBook] = useState(null)
-
+    const [query , setQuery ] = useState('programming')
 
     useEffect(()=>{
-         getBook('Ai')
-    }, [])
+         getBook(query)
+    }, [query])
 
     console.log('books state:' , books)
 
     const handleopen = (book)=>{
         setSelectedBook(book)
-
     }
+  
     const handleClose = ()=>{
         setSelectedBook(null)
     }
 
 
- const [pageNumber, setPageNumber] = useState(0);
+  const [pageNumber, setPageNumber] = useState(0);
   const booksPerPage = 6;
   const pagesVisited = pageNumber * booksPerPage;
   const pageCount = Math.ceil(books.length / booksPerPage);
@@ -68,14 +93,49 @@ export default function Books(){
     setPageNumber(selected);
   };
 
-    if(loading){
-      return <LottiHandeler status={'page'}/>  
-    }
-     
-
+    if(loading) return <LottiHandeler status={'page'}/>  
+    
     return(
-      <div className='mx-20 flex flex-col p-6 max-md:mx-10'>
-        <h1 className='mx-auto mb-6 flex gap-2 text-4xl font-bold text-blue-600'>Books < GiOpenBook /> </h1>
+      <div className='mx-0 flex flex-col p-2 md:mx-20 md:p-5'>
+        {/* <h1 className='mx-auto my-6 flex gap-2 text-4xl font-bold text-blue-600'>Books < GiOpenBook /> </h1> */}
+       
+        <h1 className="md:gap-15 mx-auto my-5 flex items-center gap-7 text-2xl font-bold text-blue-800 md:text-6xl">
+         Books
+
+      {/* Book */}
+      <span className="perspective-[1600px] md:h-15 relative h-10 w-7 md:w-10">
+        {/* Book body */}
+        <span className="absolute inset-0 rounded-md bg-slate-200 shadow-xl" />
+
+        {/* Spine */}
+        <span className="absolute left-0 top-0 h-full w-1 bg-slate-600" />
+
+        {/* Pages */}
+        {[0, 1, 2, 3].map((i) => (
+          <motion.span
+            key={i}
+            className="absolute inset-0 origin-left rounded bg-gradient-to-r from-slate-100 to-slate-300 shadow"
+            initial={{ rotateY: 0 }}
+            animate={{ rotateY: -180 }}
+            transition={{
+              duration: 1.4,
+              delay: i * 0.6,
+              repeat: Infinity,
+              repeatDelay: 2,
+              ease: "easeInOut",
+            }}
+            style={{ zIndex: 5 - i }}
+          />
+        ))}
+
+        {/* Front Cover */}
+        <span className="absolute inset-0 rounded-md bg-gradient-to-br from-blue-600 to-blue-900 shadow-lg" />
+
+        {/* Shadow */}
+        <span className="absolute -bottom-1 left-1/2 h-2 w-10 -translate-x-1/2 rounded-full bg-black/30 blur-md" />
+      </span>
+        </h1>
+              
        {
          books.length === 0 ? (< p className='text-center'> No result found</p> ) :
        ( <div className="lg:grid-col-4 grid grid-cols-1 gap-6 p-10 md:grid-cols-2 lg:grid-cols-3">
@@ -98,16 +158,15 @@ export default function Books(){
                     <h2 className='line-clamp-1 text-lg font-semibold'>{title}</h2>
                     <p className='line-clamp-1 text-sm text-gray-600'>{authors}</p>
                   {
-                    price ? ( <p className='text-xl text-red-600'> {price} $</p> ) : ( <p className='text-xl text-red-600'> Free </p> )
+                    price ? ( <p className='text-xl text-red-600'> ${price}</p> ) : ( <p className='text-xl text-red-600'> Free </p> )
                   }
                    <div className='flex gap-1 text-3xl text-yellow-400'><FaStar/><FaStar/><FaStar/><FaStar/><FaStarHalfAlt/> </div>
                     <div className='absolute left-1/2 top-1/4 flex -translate-x-1/2 items-center justify-center gap-10 overflow-hidden rounded-lg bg-blue-400 p-3 text-center text-2xl text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100'> 
-                       <div className='cursor-pointer'><FaRegHeart/></div>
-                       {/* <div className='cursor-pointer'><FaEye/></div>  */}
+                       <div onClick={()=>handleAddToWishlist(book)} className='cursor-pointer'><FaRegHeart/></div>
                        <div className='cursor-pointer'> <FaEye onClick={()=>handleopen(book)}/> </div> 
-                      <div onClick={()=>handleAddToCart(book)} className='cursor-pointer'><IoCartOutline/></div> 
+                      <div onClick={()=>handleAdd(book)} className='cursor-pointer'><IoCartOutline/></div> 
                     </div>
-                  <button onClick={()=>handleAddToCart(book)} className='my-2 w-full rounded-xl bg-blue-400 p-2 text-white max-md:flex md:hidden'>Add-To-Cart</button>
+                  <button onClick={()=>handleAdd(book)} className='my-2 flex w-full items-center justify-center rounded-xl bg-blue-400 p-2 text-white md:hidden'>Add-To-Cart</button>
                 </div>
               );
             } 
@@ -117,7 +176,7 @@ export default function Books(){
     )}
 
 {/* pagination */}
-<div className="row mx-auto mt-6 flex items-center gap-2">
+  <div className="row mx-auto mt-6 flex items-center gap-2">
    <button
       className="rounded-md border border-blue-300 px-3 py-2 text-blue-600 hover:bg-blue-800 hover:text-white disabled:opacity-50"
       onClick={() => setPageNumber(Math.max(0, pageNumber - 1))}

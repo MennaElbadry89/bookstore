@@ -1,7 +1,8 @@
-import React, { Children } from "react";
+import React from "react";
 import { lazy , Suspense } from 'react';
 import LottiHandeler from "./assets/lottifiles/LottiHandeler.jsx";
 import 'react-toastify/dist/ReactToastify.css';
+import { Toaster } from "react-hot-toast";
 
 
 import { createBrowserRouter , RouterProvider} from  'react-router-dom'
@@ -13,6 +14,7 @@ const Books = lazy(()=> import('./pages/Book/Books'))
 const Shop = lazy(()=> import('./pages/Book/Books'))
 const Categories = lazy(()=> import('./pages/Categories/Categories'))
 const Cart = lazy(()=> import('./pages/Cart/Cart'))
+const Wishlist = lazy(()=> import('./pages/Wishlist/Wishlist'))
 const Orders = lazy(()=> import('./pages/Orders/Orders'))
 const Register = lazy(()=> import('./pages/auth/Register'))
 const Login = lazy(()=> import('./pages/auth/Login'))
@@ -40,6 +42,8 @@ const router = createBrowserRouter([
                 <Suspense fullback={<LottiHandeler status= 'page' />}> <Contact/></Suspense>},
       {path: 'cart' , element :
                 <Suspense fullback={<LottiHandeler status= 'cart' />}> <Cart/></Suspense> },
+       {path: 'wishlist' , element :
+                <Suspense fullback={<LottiHandeler status= 'cart' />}> <Wishlist/></Suspense> },
       {path: 'orders' , element :
                 <Suspense fullback={<LottiHandeler status= 'cart' />}> <Orders/></Suspense> },
       {path: 'register' , element :
@@ -52,6 +56,8 @@ const router = createBrowserRouter([
     errorElement : <LottiHandeler status= 'Err' />
   }
 ])
-    return <RouterProvider router={router}/>
-
+    return   <> 
+    <RouterProvider router={router}/>
+    <Toaster position="top-center" reverseOrder={false} />
+    </>
 }

@@ -6,19 +6,22 @@ export const CountryProvider = ({children}) =>{
     //    const [ country , setCountry] = useState([])
     //     const[selected , setSelected] = useState(null)
 
-     const [ country , setCountry] = useState(() => {
-      try { return JSON.parse(localStorage.getItem('countries')) || [] } catch { return [] }
-    })
+    const [ country , setCountry] = useState(() => {
+      try { return JSON.parse(localStorage.getItem('countries')) || []       
+          } catch { return [] }
+       })
+    
     const [selected , setSelectedState] = useState(() => {
-      try { return JSON.parse(localStorage.getItem('selected')) || null } catch { return null }
-    })
+      try { return JSON.parse(localStorage.getItem('selected')) || null        
+          } catch { return null }
+      })
 
     const setSelected = (value) => {
       setSelectedState(value)
-      try { localStorage.setItem('selected', JSON.stringify(value)) } catch {}
+      try { localStorage.setItem('selected', JSON.stringify(value))        
+          } catch {}
     }
-
-     
+    
         const getCountry = async() =>{
             try {
                 const res = await axios.get("https://restcountries.com/v3.1/all?fields=name,flags")
@@ -33,10 +36,10 @@ export const CountryProvider = ({children}) =>{
         }
           
     useEffect(()=>{
-
+      if (!country.length) {
         getCountry();
-
-       }, [])
+        }
+    }, [])
 
     return(
         <CountryContext.Provider value={{ country , setSelected , selected , getCountry}}>

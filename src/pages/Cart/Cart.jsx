@@ -5,7 +5,6 @@ import { useCart } from '../../context/CartContext';
 import { BookContext } from '../../context/BookContext';
 import {AuthContext} from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom';
-import swal from 'sweetalert';
 import Swal from 'sweetalert2'
 import { collection , addDoc , serverTimestamp } from 'firebase/firestore';
 import { db , auth} from '../../firebase/firebase';
@@ -15,7 +14,7 @@ import { db , auth} from '../../firebase/firebase';
 export default function Cart() {
   const [address, setAddress] = useState("");
   
-  const { cartItems = [], setCartItems , removeFromCart, clearCart, updateQuantity,  } = useCart();
+  const { cartItems = [], removeFromCart, clearCart, updateQuantity,  } = useCart();
     
   const {currentUser, loadingDisplayCurrentUser} = useContext(AuthContext)
     
@@ -123,81 +122,81 @@ export default function Cart() {
 
 
   return (
-    <div className="Cart my-10 flex w-full flex-col items-center">
-      <h1 className="mb-6 text-3xl font-bold">Your Cart</h1>
+    <div className="Cart my-10 flex h-full w-full flex-col items-center">
+      <h1 className="mb-6 text-3xl font-bold text-blue-700">Your Cart</h1>
 
       <div className="w-3/4 space-y-4">
         {cartItems.map((item) => (
           <div key={item.id} 
           className="flex w-full items-center justify-between rounded bg-white p-4 shadow-lg">
             <div className="flex items-center gap-4">
-              <img src={item.image} alt={item.title} className="max-md:h-15 max-md:w-15 h-20 w-20 rounded-md object-cover"/>
+              <img src={item.image} alt={item.title} className="h-15 w-15 rounded-md object-cover md:h-20 md:w-20"/>
               
               <div>
-                <p className="block font-semibold max-md:hidden">{item.title || 'Untitled'}</p>
-                <p className="text-sm text-gray-600">by {item.author || 'Unknown'}</p>
+                <p className="hidden font-semibold md:block">{item.title || 'Untitled'}</p>
+                <p className="hidden text-sm text-gray-600 md:block">by {item.author || 'Unknown'}</p>
                 <p className="mt-1 font-medium text-red-600 max-md:text-sm"> {item.price ? `${item.price} $` : 'Free'}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1">
-                <button className="rounded-lg bg-blue-700 p-2 text-white hover:bg-blue-500 max-md:text-sm"
+                <button className="rounded-lg bg-blue-700 p-2 text-sm text-white hover:bg-blue-500"
                   onClick={() => handleIncrease(item)}> + 
                 </button>
 
-                <p className="min-w-[36px] text-center">{item.quantity || 1}</p>
+                <p className="text-center md:w-2">{item.quantity || 1}</p>
 
-                <button
-                  className="rounded-lg bg-blue-700 p-2 text-white hover:bg-blue-500 max-md:text-sm"
+                <button  className="rounded-lg bg-blue-700 p-2 text-sm text-white hover:bg-blue-500"
                   onClick={() => handleDecrease(item)}> -  
                 </button>
               </div>
 
               <button
-                className="btn rounded-lg bg-red-700 p-2 text-white hover:bg-red-600 max-md:text-sm"
+                className="btn rounded-lg bg-red-700 p-2 text-sm text-white hover:bg-red-600"
                 onClick={()=>setRemoveItemId(item.id)} > Remove
               </button>
               {/* remove Modal */}
                           { removeItemId === item.id && ( <div className='z-100 fixed inset-0 flex flex-col items-center justify-center gap-5 bg-black/40'>
-                            <div className="mx-auto mt-10 w-1/3 rounded bg-white p-5 shadow-lg max-md:w-2/3 max-md:p-2">
-                              <h2 className="max-md:text-md my-5 text-center text-2xl font-bold text-blue-700 max-md:text-lg">Are you sure to remove item?!</h2>                               
+                            <div className="mx-auto mt-10 w-2/3 rounded bg-white p-2 shadow-lg md:w-1/3 md:p-5">
+                              <h2 className="text-md my-5 text-center font-bold text-blue-700 md:text-lg">Are you sure to remove item?!</h2>                               
                             <div className='mt-5 flex items-center justify-center gap-1'>
-                                 <button onClick={()=>setRemoveItemId(null)} className='cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-white max-md:text-sm'>cancel</button>
-                                 <button onClick={() => handleRemove(item.id)} className='cursor-pointer rounded-lg bg-red-800 px-4 py-2 text-white max-md:text-sm' >confirm</button>
+                                 <button onClick={()=>setRemoveItemId(null)} className='cursor-pointer rounded-lg bg-blue-500 p-2 text-sm text-white'>cancel</button>
+                                 <button onClick={() => handleRemove(item.id)} className='cursor-pointer rounded-lg bg-red-800 p-2 text-sm text-white' >confirm</button>
                             </div>                                                
                           </div>
-                         </div>  )}
-                         
+                         </div> 
+                         )}                         
             </div>
           </div>
         ))}
 
-        <div className="mt-4 flex items-center justify-between rounded bg-gray-50 p-4 max-md:p-2">
-          <h2 className="max-md:text-md text-md font-semibold">Total Price :</h2>
+        <div className="mt-4 flex items-center justify-between rounded bg-gray-50 p-4 md:p-2">
+          <h2 className="text-md font-semibold">Total Price :</h2>
           <div className="flex items-center gap-4">
-            <p className="max-md:text-md text-md font-bold">{totalPrice.toFixed(2)} $</p>
+            <p className="text-md font-bold">{totalPrice.toFixed(2)} $</p>
             <div className='flex gap-2'>
               <button
-              className="rounded bg-red-600 p-2 text-white hover:bg-red-500 max-md:text-sm"
+              className="rounded bg-red-600 p-2 text-sm text-white hover:bg-red-500"
               onClick={ ()=>setOpen(true)}> Checkout
             </button> 
-{/* // Modal ckeckout */}
-
-            { open && ( <div className='z-100 fixed inset-0 flex flex-col items-center justify-center gap-5 bg-black/40'>
-                            <div className="mx-auto mt-10 w-4/5 rounded bg-white p-5 shadow-lg">
-                              <h2 className="max-md:text-md my-5 text-center text-2xl font-bold text-blue-700">confirm</h2>
+            
+                                       {/* // Modal ckeckout */}
+            { open && ( <div className='fixed inset-0 z-50 flex flex-col items-center justify-center gap-5 bg-black/40'>
+                            <div className="mx-auto mt-10 w-4/5 rounded bg-white p-2 shadow-lg md:p-5">
+                              <h2 className="my-5 text-center text-xl font-bold text-blue-700 md:text-2xl">confirm</h2>
                                  {
                                  cartItems.length === 0 ? ( <p className='text-blue-700'> Fill your cart to checkout </p>) : (
                                  <>
                                  <ul>
                                 {cartItems.map((item)=>(
                                  <li key={item.id} className="flex items-center justify-between p-2 shadow-lg">
-                                <span>{item.title}  <span className='text-red-500'>* {item.quantity} </span> </span> <span>{item.price * item.quantity} $</span>
-                                 </li> ))}
+                                    <span className='md:text-md text-sm'>{item.title}  <span className='text-red-500'>* {item.quantity} </span> </span> <span>${item.price * item.quantity}</span>
+                                 </li> 
+                                ))}
                                  </ul>
                              <div className='flex items-center justify-between p-2 shadow-lg'>
-                                  <span className="">Total: </span><span>{totalPrice} $</span>
+                                  <span className="">Total: </span><span>${totalPrice} </span>
                              </div>
                              <div>
                               <form onSubmit={(e)=>e.preventDefault} className='flex flex-col'>
@@ -219,10 +218,10 @@ export default function Cart() {
                               </form>
                               </div>
                             <div className='mt-5 flex items-center justify-center gap-1'>
-                                 <button onClick={()=>setOpen(false)} className='max-md:text-md cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-white'>cancel</button>
+                                 <button onClick={()=>setOpen(false)} className='cursor-pointer rounded-lg bg-blue-500 p-2 text-sm text-white'>cancel</button>
                                  {/* <button onClick={ handleConfirm } className='max-md:text-md cursor-pointer rounded-lg bg-red-800 px-4 py-2 text-white' >confirm</button> */}
                                 <button  disabled={!address.trim()}
-                                   onClick={handleConfirm}  className={`max-md:text-md rounded-lg px-4 py-2 text-white
+                                   onClick={handleConfirm}  className={`rounded-lg p-2 text-sm text-white
                                    ${address.trim() ? "cursor-pointer bg-red-800" : "cursor-not-allowed bg-red-300"}`} >confirm  </button>            
                             </div>                    
                              </>    ) }
@@ -230,16 +229,16 @@ export default function Cart() {
                          </div>  )}
               
             <button
-              className="rounded bg-red-600 p-2 text-white hover:bg-red-500 max-md:text-sm"
+              className="rounded bg-red-600 p-2 text-sm text-white hover:bg-red-500"
               onClick={ ()=>setIsOpenc(true)}> Clear Cart
             </button>
                           {/* clear Modal */}
-                          { isOpenc && ( <div className='z-100 fixed inset-0 flex flex-col items-center justify-center gap-5 bg-black/40'>
-                            <div className="mx-auto mt-10 w-1/3 rounded bg-white p-5 shadow-lg max-md:w-2/3">
-                              <h2 className="my-5 text-center text-2xl font-bold text-blue-700 max-md:text-xl">Are you sure to clear cart?!</h2>                               
+                          { isOpenc && ( <div className='fixed inset-0 z-50 flex flex-col items-center justify-center gap-5 bg-black/40'>
+                            <div className="mx-auto mt-10 w-2/3 rounded bg-white p-5 shadow-lg md:w-1/3">
+                              <h2 className="text-md my-5 text-center font-bold text-blue-700 md:text-2xl">Are you sure to clear cart?!</h2>                               
                             <div className='mt-5 flex items-center justify-center gap-1'>
-                                 <button onClick={()=>setIsOpenc(false)} className='max-md:text-md cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-white'>cancel</button>
-                                 <button onClick={handleclearCart} className='max-md:text-md cursor-pointer rounded-lg bg-red-800 px-4 py-2 text-white' >confirm</button>
+                                 <button onClick={()=>setIsOpenc(false)} className='cursor-pointer rounded-lg bg-blue-500 p-2 text-sm text-white'>cancel</button>
+                                 <button onClick={handleclearCart} className='cursor-pointer rounded-lg bg-red-800 p-2 text-sm text-white' >confirm</button>
                             </div>                                                
                           </div>
                          </div>  )}

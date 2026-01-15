@@ -9,12 +9,59 @@ import { FaStar } from "react-icons/fa6";
 import { FaStarHalfAlt } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import { useCart } from "../../context/CartContext";
+import Swal from 'sweetalert2';
+import {AuthContext} from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import {useWishlist} from "../../context/WishlistContext";
 
 
 export default function NewBooks(){
-        const { handleAddToCart } = useCart();
+  
+       const { handleAddToWishlist } = useWishlist()
+       const { currentUser } = useContext(AuthContext);
+       const navigate = useNavigate()
+       
+       const { handleAddToCart } = useCart();
+       
+       const handleAdd = (book) => {
+             if (!currentUser) {
+               Swal.fire({
+                 icon: 'warning',
+                 title: 'Please log in',
+                 text: 'You need to log in before adding items to your cart.',
+                 showCancelButton: true,
+                 confirmButtonText: 'Login',
+                 cancelButtonText: 'Cancel',
+               }).then((result) => {
+                 if (result.isConfirmed) {
+                   navigate('/login'); 
+                 }
+               });
+               return; 
+             }       
+             console.log('Books.handleAddToCart', book);
            
-    const { books , loading , getBook } = useContext(BookContext);
+             try {
+               handleAddToCart(book);
+               console.log('addToCart called');
+               Swal.fire({
+                 icon: 'success',
+                 title: 'Added to cart',
+                 text: `"${book.volumeInfo.title}" has been added to your cart.`,
+                 timer: 1500,
+                 showConfirmButton: false,
+               });
+             } catch (err) {
+               console.error('addToCart failed:', err);
+               Swal.fire({
+                 icon: 'error',
+                 title: 'Error',
+                 text: 'Failed to add book to cart.',
+               });
+             }
+           };
+           
+    const { books , loading } = useContext(BookContext);
     const [newBooks , setNewBooks] = useState([])
     const [count , setCount] = useState(10)
 
@@ -22,24 +69,19 @@ export default function NewBooks(){
         
     const handleopen = (book)=>{
         setSelectedBook(book)
-
     }
+    
     const handleClose = ()=>{
         setSelectedBook(null)
     }
     
-
     useEffect(()=>{
             setNewBooks(books.slice(0,count))
 
     } , [books , count])
 
-
-
-    if(loading){
-        return <LottiHandeler status={'page'}/>
-      }
-
+    if(loading) return <LottiHandeler status={'page'}/>
+      
     return(
         <div className="mx-auto flex w-full flex-col p-6">
             <h2 className="mb-6 text-3xl font-bold text-blue-600">New Releases</h2>
@@ -59,11 +101,10 @@ export default function NewBooks(){
                     color="primary"
                     className="w-full"
                 />
-
              </div>
 
-            { books &&  (  <div className="mt-5 overflow-x-auto bg-blue-50" >
-          <div className="flex w-max flex-nowrap gap-6 p-10" style={{scrollBehavior: "auto"}} >
+          { books &&  (  <div className="mt-5 overflow-x-auto bg-blue-50" >
+            <div className="flex w-max flex-nowrap gap-6 p-10" style={{scrollBehavior: "auto"}} >
                 
                 {  (books.slice(0,count)).map( (book , index)=>{
                         const info = book.volumeInfo;
@@ -85,18 +126,16 @@ export default function NewBooks(){
                                 <p className='line-clamp-1 text-sm text-red-600'>{price}</p>
                                 {/* <div className='flex gap-1 text-3xl text-yellow-400'><FaStar/><FaStar/><FaStar/><FaStar/><FaStarHalfAlt/> </div> */}
                                 <div className='flex items-center justify-center gap-10 overflow-hidden rounded-lg bg-blue-300 p-3 text-center text-2xl text-white max-md:gap-5'> 
-                                 <div className='cursor-pointer'><FaRegHeart/></div>
+                                 <div  onClick={()=>handleAddToWishlist(book)} className='cursor-pointer'><FaRegHeart/></div>
                                 <div className='cursor-pointer'> <FaEye onClick={()=>handleopen(book)}/> </div> 
-                                 <div className='cursor-pointer'><IoCartOutline onClick={()=>handleAddToCart(book)}/></div>
+                                 <div className='cursor-pointer'><IoCartOutline onClick={()=>handleAdd(book)}/></div>
                                 </div>
                             </div>
                         )
                     })
                 }              
             </div>
-
         </div> )}
-
 
             {/* Modal */}
 

@@ -34,7 +34,7 @@ function Profile(){
         
 return(
     <div className="Profile mx-auto max-w-2xl p-10">
-      <h1 className="mb-6 text-3xl font-bold">My Profile</h1>
+      <h1 className="mb-6 text-3xl font-bold text-blue-600">My Profile</h1>
       <div className="space-y-4 rounded bg-white p-6 shadow-lg">
         <div className='flex'>
           <label className="font-semibold text-blue-700">Name:</label>

@@ -7,13 +7,20 @@ import { BookProvider } from './context/BookContext.jsx'
 import { CartProvider } from './context/CartContext.jsx'
 import { CountryProvider } from './context/CountryContext.jsx'
 import { AuthContextProvider } from './context/AuthContext.jsx'
+import { WishlistProvider } from './context/WishlistContext.jsx'
+import { ContactProvider } from "./context/ContactContext";
+
+
+
 
 
 createRoot(document.getElementById('root')).render(
+        <ContactProvider>
 
-        <CartProvider>
-        <AuthContextProvider>
+        <AuthContextProvider>          
         <CountryProvider>
+        <WishlistProvider>
+        <CartProvider>
         <HeroUIProvider>
         <BookProvider>
         
@@ -21,10 +28,12 @@ createRoot(document.getElementById('root')).render(
 
         </BookProvider>
         </HeroUIProvider>
+        </CartProvider>  
+        </WishlistProvider>     
         </CountryProvider>
         </AuthContextProvider>
-        </CartProvider>
 
+        </ContactProvider>
 
 
 

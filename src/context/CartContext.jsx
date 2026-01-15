@@ -1,10 +1,10 @@
 import { createContext  , useContext , useState , useEffect} from "react";
-import {toast} from "react-toastify";
+// import {AuthContext} from "./AuthContext";
+
 
 export const CartCountext = createContext()
 
 export const CartProvider = ({children}) =>{
-
 
     const [cartItems , setCartItems] = useState(()=>{
       try{
@@ -33,7 +33,7 @@ export const CartProvider = ({children}) =>{
   
 
       const handleAddToCart = (book) => {
-      
+
           const info = book.volumeInfo || {};
           const sale = book.saleInfo || {};
           const item = {
@@ -53,8 +53,7 @@ export const CartProvider = ({children}) =>{
             console.error('addToCart failed:', err);
           }
         };
-
-
+        
 
     const removeFromCart = (id) => {
         setCartItems((p) => p.filter((i) => i.id !== id));

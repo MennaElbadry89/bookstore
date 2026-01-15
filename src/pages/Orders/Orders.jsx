@@ -40,25 +40,29 @@ const {cartItems} = useCart()
 
 
 return(
-  <div className="Orders w-full p-10"> 
-  <h2 className='mb-4 text-2xl font-bold'>My Orders</h2>
-   
+  <div className="Orders mx-0 flex flex-col items-center justify-center p-10"> 
+  <h2 className='m-4 text-center text-2xl font-bold text-blue-600 md:text-4xl'>Your Orders</h2>
+   <div className='mx-auto flex w-full items-center justify-center p-5 md:w-3/4'>
    {
     orders.length === 0 ? (<p>No orders yet</p>) : ( 
-      <table className='min-w-full border border-blue-400'>
+      <table className='md:text-md w-full overflow-hidden border border-blue-400 text-sm'>
         <thead>
-          <tr className='bg-blue-50'>
-          <td className='border border-blue-300 p-2'>  Order.no </td>
+          <tr className='bg-blue-50 text-center'>
+          <td className='hidden border border-blue-300 p-2 md:block'>  Order.no </td>
           <td className='border border-blue-300 p-2'>  Items </td>
           <td className='border border-blue-300 p-2'>  Total </td>
           <td className='border border-blue-300 p-2'>  Date </td>
           </tr>
         </thead>
-        <tbody>
+        <tbody> 
       { orders.map(order =>(
-          <tr key={order.id} className='border border-blue-300 p-2'>
-            <td className='border border-blue-300 p-2'>{order.id}</td>
-            <td className='border border-blue-300 p-2'>{order.items.length}</td>
+          <tr key={order.id} className='overflow-hidden border border-blue-300 text-center'>
+            <td className='hidden border border-blue-300 p-2 md:block'>{order.id}</td>
+            <td className='border border-blue-300 p-2'>
+              <div className='flex flex-wrap gap-1'>
+                {order.items.map((item, index) => <img key={index} src={item.image} alt="" className='h-5 w-5'/>)}
+              </div>
+            </td>
             <td className='border border-blue-300 p-2'>{order.total}</td>
             <td className='border border-blue-300 p-2'>{order.createdAt?.toDate().toLocaleString()|| '-'}</td>
           </tr>
@@ -67,7 +71,7 @@ return(
       </table>
     )
    }
-  
+  </div>
   
   </div>
 
