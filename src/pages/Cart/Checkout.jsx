@@ -19,8 +19,8 @@ export default function Ckeckout(){
     }
 
     return(
-        <div className="w-3/4 mx-auto mt-10 p-5 bg-white shadow-lg rounded">
-            <h2 className="text-2xl text-center font-bold">confirm</h2>
+        <div className="mx-auto mt-10 w-3/4 rounded bg-white p-5 shadow-lg">
+            <h2 className="text-center text-2xl font-bold">confirm</h2>
             {
                 cartItems.length === 0 ? ( <p> cart is empty </p>) : (
                     <>
@@ -34,7 +34,7 @@ export default function Ckeckout(){
                     <div>
                         <span className="">Total: {totalPrice}$</span>
                     </div>
-                    <button className="bg-green-700 hover:bg-green-500 text-white p-2 my-10 rounded"
+                    <button className="my-10 rounded bg-green-700 p-2 text-white hover:bg-green-500"
                     onClick={handleConfirm}>confirm</button>
                     
                     </>

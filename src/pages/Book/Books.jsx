@@ -160,13 +160,20 @@ export default function Books(){
                   {
                     price ? ( <p className='text-xl text-red-600'> ${price}</p> ) : ( <p className='text-xl text-red-600'> Free </p> )
                   }
-                   <div className='flex gap-1 text-3xl text-yellow-400'><FaStar/><FaStar/><FaStar/><FaStar/><FaStarHalfAlt/> </div>
-                    <div className='absolute left-1/2 top-1/4 flex -translate-x-1/2 items-center justify-center gap-10 overflow-hidden rounded-lg bg-blue-400 p-3 text-center text-2xl text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100'> 
+                   <div className='gap- flex text-2xl text-yellow-400 md:text-3xl'><FaStar/><FaStar/><FaStar/><FaStar/><FaStarHalfAlt/> </div>
+                    
+                  <div className='absolute left-1/2 top-1/4 flex -translate-x-1/2 items-center justify-center gap-10 overflow-hidden rounded-lg bg-blue-400 p-3 text-center text-2xl text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100'> 
                        <div onClick={()=>handleAddToWishlist(book)} className='cursor-pointer'><FaRegHeart/></div>
                        <div className='cursor-pointer'> <FaEye onClick={()=>handleopen(book)}/> </div> 
                       <div onClick={()=>handleAdd(book)} className='cursor-pointer'><IoCartOutline/></div> 
-                    </div>
-                  <button onClick={()=>handleAdd(book)} className='my-2 flex w-full items-center justify-center rounded-xl bg-blue-400 p-2 text-white md:hidden'>Add-To-Cart</button>
+                  </div>
+                    
+                  <div className='flex items-center justify-center gap-10 rounded-lg bg-blue-400 p-2 text-center text-2xl text-white md:hidden'> 
+                       <div onClick={()=>handleAddToWishlist(book)} className='cursor-pointer'><FaRegHeart/></div>
+                       <div className='cursor-pointer'> <FaEye onClick={()=>handleopen(book)}/> </div> 
+                      <div onClick={()=>handleAdd(book)} className='cursor-pointer'><IoCartOutline/></div> 
+                  </div>
+                  {/* <button onClick={()=>handleAdd(book)} className='my-2 flex w-full items-center justify-center rounded-xl bg-blue-400 p-2 text-white md:hidden'>Add-To-Cart</button> */}
                 </div>
               );
             } 
@@ -199,17 +206,17 @@ export default function Books(){
 {/* Modal */}
 
     { selectedBook && (<div className="modal fixed inset-0 z-[1000] flex items-center justify-center bg-black/50">
-            <div className="relative w-1/2 rounded-2xl bg-white p-5 max-md:mx-10 max-md:w-full">
+            <div className="relative mx-5 w-full rounded-2xl bg-white p-2 md:w-1/2 md:p-5">
                 <button className="absolute right-3 top-2 text-gray-500 hover:text-black" 
                 onClick={handleClose}> <IoCloseSharp className='bg-red-700 text-2xl text-white'/></button>
                 <div className='mb-5 flex gap-5'>
                 <img src={selectedBook.volumeInfo.imageLinks?.thumbnail || "https://via.placeholder.com/150"} alt={selectedBook.volumeInfo.title}
-                 className="mask-auto h-56 w-40 object-cover text-center"/>
+                 className="mask-auto object-cover text-center md:h-56 md:w-40"/>
                  <div>
-                <h2 className="mb-2 text-lg font-semibold">{selectedBook.volumeInfo.title}</h2>
-                <p className="mb-3 text-gray-400">{selectedBook.volumeInfo.authors?.join(',') || 'unknown'}</p>
-               <p className="mt-3 font-semibold text-red-500">{selectedBook.saleInfo?.listPrice?.amount ? 
-                `${selectedBook.saleInfo.listPrice.amount} $` : 'Free'}</p>
+                <h2 className="mb-2 font-semibold md:text-lg">{selectedBook.volumeInfo.title}</h2>
+                <p className="mb-2 text-gray-400">{selectedBook.volumeInfo.authors?.join(',') || 'unknown'}</p>
+               <p className="mt-2 font-semibold text-red-500">{selectedBook.saleInfo?.listPrice?.amount ? 
+                `$${selectedBook.saleInfo.listPrice.amount}` : 'Free'}</p>
                 <button  onClick={() => {
                     const url = selectedBook.volumeInfo.previewLink;
                     if (url) window.open(url, '_blank', 'noopener,noreferrer');
